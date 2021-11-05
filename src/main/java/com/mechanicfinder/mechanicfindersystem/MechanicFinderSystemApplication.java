@@ -34,7 +34,7 @@ public class MechanicFinderSystemApplication {
 				new Mechanic("peter",
 						"parker",
 						"peter@gmail.com",
-						Availability.NOT_AVAILABLE,"" +
+						Availability.NOT_AVAILABLE,
 						"kiambu"),
 				new Mechanic("mary",
 						"public",
@@ -80,11 +80,7 @@ public class MechanicFinderSystemApplication {
 
 		Mechanic john = mechanicRepository.findMechanicByFirstName("john");
 
-		if (oil_change.equals(null) || john.equals(null)){
-			throw new RuntimeException("either task or service is null");
-		}else {
-			john.getTasks().add(oil_change);
-		}
+		john.getTasks().add(oil_change);
 
 		mechanicRepository.save(john);
 
