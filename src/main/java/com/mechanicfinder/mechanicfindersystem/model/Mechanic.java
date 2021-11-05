@@ -1,5 +1,8 @@
 package com.mechanicfinder.mechanicfindersystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Mechanic {
 
     @Id
@@ -35,8 +42,13 @@ public class Mechanic {
     @Column(name = "location")
     private String location;
 
-    @OneToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.EAGER,
     cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "mechanic_tasks",
+            joinColumns = @JoinColumn(name = "mechanic_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id")
+    )
     private List<Task> tasks = new ArrayList<>();
 
     public Mechanic(String firstName, String lastName, String email, Availability availability, String location) {
@@ -53,6 +65,7 @@ public class Mechanic {
                 throw new RuntimeException("The Task already exists");
             }else {
                 this.tasks.add(task);
+                task.getMechanics().add(this);
             }
         }
 
