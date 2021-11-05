@@ -1,11 +1,18 @@
 package com.mechanicfinder.mechanicfindersystem.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Duration;
 @Entity
 @Table(name = "service")
-public class Service {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,7 +20,7 @@ public class Service {
     private Long id;
 
     @Column(name = "service_name")
-    private String serviceName;
+    private String taskName;
 
     @Column(name = "description")
     private String description;
@@ -24,7 +31,14 @@ public class Service {
     @Column(name = "duration")
     private Duration duration;
 
-    @ManyToOne(fetch = FetchType.EAGER,
-    cascade = CascadeType.ALL)
-    private Mechanic mechanic;
+//    @ManyToOne(fetch = FetchType.EAGER,
+//    cascade = CascadeType.ALL)
+//    private Mechanic mechanic;
+
+    public Task(String taskName, String description, BigDecimal cost, Duration duration) {
+        this.taskName = taskName;
+        this.description = description;
+        this.cost = cost;
+        this.duration = duration;
+    }
 }
