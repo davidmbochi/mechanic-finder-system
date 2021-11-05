@@ -1,7 +1,8 @@
 package com.mechanicfinder.mechanicfindersystem.repository;
 
-import com.mechanicfinder.mechanicfindersystem.model.Service;
+import com.mechanicfinder.mechanicfindersystem.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ServiceRepository extends JpaRepository<Service, Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
+    Task findTaskByTaskName(String taskName);
 }
