@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+    <link rel="stylesheet" th:href="@{/css/shared/shared.css}">
+    <link rel="stylesheet" th:href="@{/css/homepage-style/homepage.css}">
+</head>
+<body>
+
+<header class="heading">
+   <nav class="nav">
+       <ul class="navbar">
+           <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+           <li class="navbar-service"><a th:href="@{/api/task/all}">services</a></li>
+           <li class="navbar-about"><a th:href="@{#}">about us</a></li>
+           <li class="navbar-login"><a th:href="@{/login-page}">login</a></li>
+       </ul>
+
+
+   </nav>
+</header>
+
+<section class="showcase">
+    <div class="container">
+        <div class="showcase-text">
+            <p>We ensure customers get the best experience by only approving experienced and qualified mechanic professionals who can get the job done to perfection.</p>
+            <div class="showcase-button">
+                <a class="btn showcase-btn" th:href="@{api/mechanic/register}">mechanic application</a>
+            </div>
+
+        </div>
+
+        <div class="showcase-image">
+            <img th:src="@{images/mechanic.png}" alt="mechanic image">
+
+        </div>
+
+    </div>
+
+</section>
+<section class="images-section">
+    <div class="container">
+        <div class="left-image image">
+            <img th:src="@{images/left-image.png}" alt="left image">
+
+        </div>
+
+        <div class="middle-image image">
+            <img th:src="@{images/middle-image.png}" alt="middle image">
+
+        </div>
+        <div class="right-image image">
+            <img th:src="@{images/right-image.png}" alt="right image">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+</body>
+</html>

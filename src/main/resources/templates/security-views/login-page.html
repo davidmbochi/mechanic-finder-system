@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/security-styles/login-page.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="login-section">
+    <div class="container">
+        <div class="card">
+            <h1>Enter username and password</h1>
+            <form th:action="@{/process-login}" method="post">
+                <div class="form-control">
+                    <label for="username">username</label>
+                    <input type="text" id="username" required name="username">
+
+                </div>
+                <div class="form-control">
+                    <label for="password">password</label>
+                    <input type="password" id="password" required name="password">
+
+                </div>
+                <div class="form-control">
+                    <input class="btn btn-primary" type="submit" value="LOGIN">
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

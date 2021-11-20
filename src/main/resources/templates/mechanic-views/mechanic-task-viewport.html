@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Make Appointment</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/mechanic-styles/mechanic-task-viewport-style.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/api/task/all}">services</a></li>
+            <li><a th:href="@{/login-page}">Login</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="mechanic-appointment-section">
+    <h1 class="appointment-title">Book a mechanic based on your location</h1>
+    <div class="container">
+        <div class="card" th:each="mechanic: ${mechanics}">
+            <img th:src="${mechanic.getProfileImagePath()}">
+            <h4 th:text="${mechanic.firstName+' '+mechanic.lastName}"></h4>
+            <h4 th:text="${mechanic.email}"></h4>
+            <h4 th:text="${mechanic.phoneNumber}"></h4>
+            <h4 th:text="${mechanic.location}"></h4>
+            <a class="btn btn-primary" th:href="@{${'/api/customer/register/'+mechanic.id+'/'+taskName}}">make appointment</a>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

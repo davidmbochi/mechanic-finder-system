@@ -1,0 +1,16 @@
+.heading{
+    background-color: #6887F3;
+}
+
+.form-section .container{
+    justify-content: center;
+}
+
+.reg-btn{
+    padding: 10px;
+    margin: 10px 0  0  150px;
+}
+
+.reg-btn:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/customer-styles/customer-reg-form.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/login-page}">Login</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<div class="customer-form-section">
+    <div class="container">
+        <div class="card">
+            <h1>Create account</h1>
+            <form th:action="@{${'/api/customer/process-customer-reg-form/'+id+'/'+taskName}}" th:object="${customer}" enctype="multipart/form-data" method="post">
+                <div class="form-control">
+                    <label for="firstName">First name</label>
+                    <input type="text" th:field="*{firstName}" required id="firstName">
+
+                </div>
+                <div class="form-control">
+                    <label for="lastName">Last name</label>
+                    <input type="text" th:field="*{lastName}" required id="lastName">
+
+                </div>
+                <div class="form-control">
+                    <label for="phoneNumber">contact details</label>
+                    <input type="text" th:field="*{phoneNumber}" required id="phoneNumber">
+
+                </div>
+                <div class="form-control">
+                    <label for="email">email</label>
+                    <input type="text" th:field="*{email}" required id="email">
+
+                </div>
+                <div class="form-control">
+                    <label for="username">username</label>
+                    <input type="text" th:field="*{username}" required id="username">
+
+                </div>
+                <div class="form-control">
+                    <label for="password">password</label>
+                    <input type="password" th:field="*{password}" required id="password">
+
+                </div>
+                <div class="form-control">
+                    <label for="profileImage">upload your profile image</label>
+                    <input type="file" name="image" accept="image/png" required id="profileImage">
+
+                </div>
+                <input type="submit" class="btn btn-primary" value="create account">
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

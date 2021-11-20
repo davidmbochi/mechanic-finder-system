@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mechanic ViewPort</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/mechanic-styles/mechanic-viewport.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/api/task/all}">services</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="profile-section">
+    <div class="container">
+        <div class="card">
+            <div class="profile-details">
+                <div class="profile-image">
+                    <img th:src="@{${mechanic.getProfileImagePath()}}" alt="profile image">
+                </div>
+                <h4 th:text="${mechanic.firstName+ ' '+ mechanic.lastName}"></h4>
+                <h4 th:text="${mechanic.phoneNumber}"></h4>
+                <h4 th:text="${mechanic.email}"></h4>
+                <h4 th:text="${mechanic.applicationStatus}"
+                    style="background-color: lightgray; padding: 10px; border-radius: 10px"></h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="services-section">
+    <div class="container">
+        <h4>My services</h4>
+        <div class="card">
+            <div class="btn add-service-btn">
+                <a th:href="@{${'/api/task/task-form/'+mechanic.id}}">add service</a>
+            </div>
+            <div class="service-details">
+                <div class="service-list" th:each="task : ${mechanic.getTasks()}">
+                    <div class="service-id">
+                        <p th:text="${task.id}"></p>
+
+                    </div>
+                    <div class="task-name">
+                        <p th:text="${task.taskName}"></p>
+                    </div>
+                    <div class="task-description">
+                        <p th:text="${task.description}"></p>
+                    </div>
+                    <div class="task-duration">
+                        <p th:text="${task.duration+' hours'}"></p>
+
+                    </div>
+                    <div class="hourly-payment">
+                        <p th:text="${task.hourlyPaymentRate+' /hr'}"></p>
+                    </div>
+
+                    <div class="edit">
+                        <a  class="btn edit-btn" th:href="@{#}">Edit service</a>
+                    </div>
+                    |
+                    <div class="delete">
+                        <a class="btn delete-btn" th:href="@{#}">Delete service</a>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+<section class="appointment-section">
+    <div class="container">
+        <h4>My Appointments</h4>
+        <div class="card">
+                <div class="appointment-list" th:each="appointment : ${mechanic.getAppointments()}">
+                    <div class="appointment-id">
+                        <p th:text="${appointment.id}"></p>
+
+                    </div>
+                    <div class="appointment-customer">
+                        <p th:text="${appointment.getCustomer().getFirstName()}"></p>
+
+                    </div>
+
+                    <div class="appointment-service">
+                        <p th:text="${appointment.getTask().getTaskName()}"></p>
+
+                    </div>
+
+                    <div class="start-time">
+                        <p th:text="${appointment.startTime}"></p>
+
+                    </div>
+
+                    <div class="ent-time">
+                        <p th:text="${appointment.endTime}"></p>
+
+                    </div>
+
+                    <div class="service-duration">
+                        <p th:text="${appointment.getTask().getDuration()}"></p>
+
+                    </div>
+                    <div class="approve">
+                        <a th:href="@{#}" class="btn btn-primary">Approve appointment</a>
+
+                    </div>
+
+                    <div class="decline">
+                        <a th:href="@{#}" class="btn btn-primary decline-btn">Decline appointment</a>
+
+                    </div>
+
+                </div>
+
+
+
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

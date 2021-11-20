@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Viewport</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/customer-styles/customer-viewport.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="profile-section">
+    <div class="container">
+        <div class="card">
+            <div class="profile-details">
+                <div class="profile-image">
+                   <img th:src="@{${customer.getCustomerImagePath()}}" alt="customer image">
+
+                </div>
+                <h4 th:text="${customer.firstName+' '+customer.lastName}"></h4>
+                <h4 th:text="${customer.phoneNumber}"></h4>
+                <h4 th:text="${customer.email}"></h4>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="appointment-section">
+    <div class="container">
+        <h4>My appointments</h4>
+        <div class="card">
+            <div class="appointment-list" th:each="appointment: ${customer.getAppointments()}">
+                <div>
+                    <p th:text="${appointment.id}"></p>
+
+                </div>
+                <div>
+                    <p th:text="${appointment.getTask().getTaskName()}"></p>
+
+                </div>
+                <div>
+                    <p th:text="${appointment.getStartTime()}"></p>
+                </div>
+                <div>
+                    <p th:text="${appointment.getEndTime()}"></p>
+                </div>
+                <div>
+                    <p th:text="${appointment.getTask().getDuration()+' hrs'}"></p>
+                </div>
+                <div>
+                    <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
+                </div>
+                <div>
+                    <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
+                </div>
+                <div>
+                    <p class="btn btn-primary status-btn" th:text="${appointment.appointmentStatus}">APPOINTMENT STATUS</p>
+                </div>
+                <div>
+                    <a th:href="@{#}" class="btn btn-primary decline-btn">withdraw appointment</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

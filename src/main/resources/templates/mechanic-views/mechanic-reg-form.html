@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/shared/shared.css}">
+    <link rel="stylesheet" th:href="@{/css/mechanic-styles/mechanic-reg-form.css}">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/login-page}">Login</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="form-section">
+    <div class="container">
+        <div class="card">
+            <h1>Mechanic Application Form</h1>
+            <form th:action="@{/api/mechanic/process-mechanic-reg-form}" th:object="${mechanic}" method="post" enctype="multipart/form-data">
+                <div class="form-control">
+                    <label for="firstName">First Name</label>
+                    <input type="text" th:field="*{firstName}" id="firstName" required>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" th:field="*{lastName}" id="lastName" required>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+                </div>
+                <div class="form-control">
+                    <label for="email">Email</label>
+                    <input type="email" th:field="*{email}" id="email" required>
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+                </div>
+                <div class="form-control">
+                    <label for="location">Location</label>
+                    <input type="text" th:field="*{location}" id="location" required>
+                    <p th:if="${#fields.hasErrors('location')}" th:errorclass="error" th:errors="*{location}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label for="username">username</label>
+                    <input type="text" th:field="*{username}"  id="username" required>
+                    <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label for="password">password</label>
+                    <input type="password" th:field="*{password}" id="password" required>
+                    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">
+
+                </div>
+                <div class="form-control">
+                    <label for="phoneNumber">contact details</label>
+                    <input type="text" th:field="*{phoneNumber}" id="phoneNumber" required>
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>
+                </div>
+                <div class="form-control">
+                    <label>upload your profile image</label>
+                    <input type="file" name="image" accept="image/png" required>
+
+                </div>
+
+                <div class="form-control">
+                    <label>upload your qualification document</label>
+                    <input type="file" name="pdf" accept="application/pdf" required>
+
+                </div>
+
+                <input class="btn reg-btn" type="submit" value="submit application">
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>
