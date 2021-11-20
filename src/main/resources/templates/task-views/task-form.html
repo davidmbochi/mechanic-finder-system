@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Task</title>
+    <link th:href="@{/css/shared/shared.css}"rel="stylesheet">
+    <link th:href="@{/css/task-styles/task-form-style.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="task-section">
+    <div class="container">
+        <div class="card">
+            <h1>Add a new service</h1>
+            <form th:object="${task}" th:action="@{${'/api/task/processTaskForm/'+mechanic.id}}" method="post">
+                <div class="form-control">
+                    <label>Task name</label>
+                    <input type="text" th:field="*{taskName}" required>
+                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{taskName}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label>Description</label>
+                    <input type="text" th:field="*{description}" required>
+                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{description}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label>Service fee</label>
+                    <input type="number" th:field="*{hourlyPaymentRate}" required>
+                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{hourlyPaymentRate}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label for="duration">Hours to complete the service</label>
+                    <input type="number" th:field="*{duration}" required id="duration">
+                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{duration}"></p>
+
+                </div>
+
+                <input type="submit" class="btn add-btn" value="add service">
+
+            </form>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

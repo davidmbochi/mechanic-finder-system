@@ -1,0 +1,31 @@
+body{
+    background-color: #6887F3;
+}
+
+.showcase-text{
+    flex: 1 1 40em;
+}
+
+.showcase-button{
+    margin: 30px 0 30px 150px;
+}
+
+.showcase-text p{
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.showcase-image{
+    width: 500px;
+}
+
+.showcase-btn{
+    text-decoration: none;
+    color: white;
+    box-shadow: 1px 5px #888888;
+}
+
+.showcase-btn:hover{
+    background-color: #3e8e41;
+}
+

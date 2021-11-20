@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+  <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+  <link th:href="@{/css/task-styles/all-tasks-view.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+  <nav class="nav">
+    <ul class="navbar">
+      <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+      <li><a th:href="@{/login-page}">Login</a></li>
+
+    </ul>
+
+  </nav>
+
+</header>
+<section class="tasks-section">
+  <h1 class="task-title">Select a services</h1>
+  <div class="container">
+    <div class="card" th:each="task : ${tasks}">
+      <h1 th:text="${task.taskName}"></h1>
+      <p th:text="${task.description}"></p>
+      <p th:text="${'Kshs '+task.hourlyPaymentRate}+'/hr'"></p>
+      <a class="btn btn-primary" th:href="@{${'/api/task/'+task.taskName}}">view mechanics</a>
+    </div>
+
+  </div>
+
+</section>
+
+</body>
+</html>

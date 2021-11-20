@@ -1,0 +1,152 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #6887F3;
+}
+
+img{
+    width: 100%;
+    height: auto;
+}
+
+.navbar{
+    max-width: 1310px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.navbar-title{
+    margin-right: auto;
+}
+
+.navbar li{
+    list-style-type: none;
+}
+
+.navbar li a{
+    text-decoration: none;
+    font-family: Roboto SansSerif;
+    padding: 20px;
+    margin: 20px;
+    color: white;
+}
+
+.navbar-title a{
+    font-size: 20px;
+}
+
+.container{
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.card{
+    border: 1px solid lightgray;
+    padding: 60px;
+    border-radius: 10px;
+    z-index: 1.5;
+    background-color: white;
+}
+
+.btn{
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #04AA6D;
+    text-align: center;
+}
+
+.btn-primary{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.btn-primary:hover{
+    cursor: pointer;
+}
+
+.profile-section .card{
+    width: 100%;
+    padding: 30px;
+}
+
+/*profile image css declaration*/
+.profile-details{
+    background-color: #888888;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.profile-details h4{
+    padding: 10px;
+}
+
+.profile-image{
+    width: 150px;
+}
+.profile-image img{
+    border-radius: 100%;
+}
+
+/*form control declaration*/
+
+.form-control{
+    padding: 10px;
+}
+
+.form-control input{
+   width: 100%
+}
+
+.form-control input[type='text']:focus{
+    outline: none;
+}
+
+.form-control input[type='number']:focus{
+    outline: none;
+}
+
+.form-control input[type='password']:focus{
+    outline: none;
+}
+
+/*customer and mechanic appointments sections*/
+.appointment-section .card{
+    width: 100%;
+    padding: 30px;
+}
+
+.appointment-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #888888;
+}
+
+.decline-btn{
+    background-color: red;
+}
+
+
+

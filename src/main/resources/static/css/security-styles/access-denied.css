@@ -1,0 +1,8 @@
+.denied-section .card{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}

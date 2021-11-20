@@ -1,0 +1,49 @@
+.services-section .card{
+    width: 100%;
+    padding: 30px;
+}
+
+.service-details{
+    background-color: #888888;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.add-service-btn{
+    color: white;
+    padding: 10px;
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.add-service-btn a{
+    color: white;
+    text-decoration: none;
+}
+
+.service-list{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.delete-btn{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    background-color: red;
+}
+
+.edit-btn{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
