@@ -40,4 +40,14 @@ public class AppointmentServiceImpl implements AppointmentService{
         return appointmentRepository
                 .findAppointmentByAppointmentDateAndEndTime(date,endTime);
     }
+
+    @Override
+    public Appointment findAppointmentById(Long id) {
+        return appointmentRepository.findAppointmentById(id);
+    }
+
+    @Override
+    public Appointment updateAppointmentStatus(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
 }

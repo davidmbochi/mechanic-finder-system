@@ -36,6 +36,7 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
+    @Transactional
     public AppUser findAppUserByUserName(String username) {
         return appUserRepository.findAppUserByUsername(username);
     }

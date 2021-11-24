@@ -44,21 +44,20 @@
         <div class="card">
             <div class="appointment-list" th:each="appointment: ${customer.getAppointments()}">
                 <div>
-                    <p th:text="${appointment.id}"></p>
+                    <a th:href="@{#}" class="btn btn-primary status-btn" th:text="${appointment.getAppointmentStatus()}"></a>
+                </div>
+                <div>
+                    <p th:text="${'Service: '+appointment.getTask().getTaskName()}"></p>
 
                 </div>
                 <div>
-                    <p th:text="${appointment.getTask().getTaskName()}"></p>
-
+                    <p th:text="${'Duration: '+appointment.getTask().getDuration()+' hrs'}"></p>
                 </div>
                 <div>
-                    <p th:text="${appointment.getStartTime()}"></p>
+                    <p th:text="${'From: '+appointment.getStartTime()}"></p>
                 </div>
                 <div>
-                    <p th:text="${appointment.getEndTime()}"></p>
-                </div>
-                <div>
-                    <p th:text="${appointment.getTask().getDuration()+' hrs'}"></p>
+                    <p th:text="${'To: '+appointment.getEndTime()}"></p>
                 </div>
                 <div>
                     <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
@@ -67,10 +66,8 @@
                     <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
                 </div>
                 <div>
-                    <p class="btn btn-primary status-btn" th:text="${appointment.appointmentStatus}">APPOINTMENT STATUS</p>
-                </div>
-                <div>
-                    <a th:href="@{#}" class="btn btn-primary decline-btn">withdraw appointment</a>
+                    <a th:href="@{#}" class="btn btn-primary decline-btn"
+                    onclick="if (! confirm('Are you sure !')) return false">withdraw appointment</a>
                 </div>
 
             </div>

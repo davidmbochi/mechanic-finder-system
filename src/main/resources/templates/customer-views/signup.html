@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
-    <link th:href="@{/css/customer-styles/customer-reg-form.css}" rel="stylesheet">
+    <title>Customer</title>
+  <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+  <link th:href="@{/css/customer-styles/customer-reg-form.css}" rel="stylesheet">
 </head>
 <body>
 <header class="heading">
@@ -22,7 +22,7 @@
     <div class="container">
         <div class="card">
             <h1>Create account</h1>
-            <form th:action="@{${'/api/customer/process-customer-reg-form/'+mechanic.id+'/'+task.taskName}}" th:object="${customer}" enctype="multipart/form-data" method="post">
+            <form th:action="@{/api/customer/process-signup}" th:object="${customer}" enctype="multipart/form-data" method="post">
                 <div class="form-control">
                     <label for="firstName">First name</label>
                     <input type="text" th:field="*{firstName}" required id="firstName">

@@ -35,19 +35,24 @@ public class CustomerServiceImpl implements CustomerService{
 
         Customer customerExists = customerRepository.findCustomerByEmail(customer.getEmail());
 
-        if (customer != customerExists){
-            Customer registeredCustomer = customerRepository.save(customer);
-            AppUser appUser = new AppUser(registeredCustomer.getUsername(),
-                    passwordEncoder.encode(registeredCustomer.getPassword()));
+        if (customerExists == null){
+//            Customer registeredCustomer = customerRepository.save(customer);
+            AppUser appUser = new AppUser(customer.getUsername(),
+                    passwordEncoder.encode(customer.getPassword()));
 
             Role role_customer = roleRepository.findRoleByRoleName("ROLE_CUSTOMER");
             appUser.getRoles().add(role_customer);
 
             appUserService.createCredentials(appUser);
-            uploadImageOrDocument(registeredCustomer, profileImage, imageName
+
+            customer.setAppUser(appUser);
+
+            Customer customer1 = customerRepository.save(customer);
+
+            uploadImageOrDocument(customer, profileImage, imageName
             );
 
-            return registeredCustomer;
+            return customer1;
         }else {
             throw new CustomerWithTheProvidedEmailExists("Customer with the email exists");
         }

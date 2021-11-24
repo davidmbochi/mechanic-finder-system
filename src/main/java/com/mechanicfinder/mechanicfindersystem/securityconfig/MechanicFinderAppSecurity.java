@@ -1,5 +1,6 @@
 package com.mechanicfinder.mechanicfindersystem.securityconfig;
 
+import com.mechanicfinder.mechanicfindersystem.model.ApplicationStatus;
 import com.mechanicfinder.mechanicfindersystem.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class MechanicFinderAppSecurity extends WebSecurityConfigurerAdapter {
     private final AppUserService appUserService;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
-
 
 
     @Bean
@@ -51,8 +51,10 @@ public class MechanicFinderAppSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/mechanic/register").permitAll()
                 .antMatchers("/api/mechanic/process-mechanic-reg-form").permitAll()
                 .antMatchers("/api/mechanic/{id}").hasAuthority("ROLE_MECHANIC")
+                .antMatchers("/api/customer/customer-signup").permitAll()
+                .antMatchers("/api/customer/process-signup").permitAll()
                 .antMatchers("/api/customer/register/{id}/{taskName}").permitAll()
-                .antMatchers("/api/customer/process-customer-reg-form/{id}/{taskName}").hasAuthority("ROLE_CUSTOMER")
+                .antMatchers("/api/customer/process-customer-reg-form/{id}/{taskName}").permitAll()
                 .antMatchers("/api/customer/{id}").hasAuthority("ROLE_CUSTOMER")
                 .and()
                 .formLogin()

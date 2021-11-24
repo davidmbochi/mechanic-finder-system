@@ -133,6 +133,10 @@ public class Mechanic {
         }
     }
 
+    public String getApplicationStatus() {
+        return String.valueOf(applicationStatus);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,5 +148,18 @@ public class Mechanic {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    @Override
+    public String toString() {
+        return "Mechanic{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", availability=" + availability +
+                ", location='" + location + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", applicationStatus=" + applicationStatus +
+                '}';
     }
 }

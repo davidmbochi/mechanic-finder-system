@@ -47,6 +47,9 @@ public class CustomMechanicFinderSuccessHandler implements AuthenticationSuccess
                 Customer customer = appUserByUserName.getCustomer();
                 redirectUrl = "/api/customer/"+customer.getId();
                 break;
+            }else if (authority.getAuthority().equals("ROLE_ADMIN")){
+                redirectUrl = "/api/admin/admin-view";
+                break;
             }
         }
 

@@ -109,6 +109,16 @@ public class MechanicServiceImpl implements MechanicService{
         return mechanicRepository.save(mechanic);
     }
 
+    @Override
+    public Mechanic approveMechanic(Mechanic mechanic) {
+        return mechanicRepository.save(mechanic);
+    }
+
+    @Override
+    public Mechanic declineMechanic(Mechanic mechanic) {
+        return mechanicRepository.save(mechanic);
+    }
+
     private void uploadImageOrDocument(Mechanic registeredMechanic,
                                        MultipartFile multipartFile,
                                        String fileName,

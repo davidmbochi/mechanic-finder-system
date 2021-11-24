@@ -14,4 +14,6 @@ public interface MechanicService {
     Mechanic findMechanicById(Long id);
     Mechanic findMechanicByFirstName(String firstName);
     Mechanic saveMechanic(Mechanic mechanic);
+    Mechanic approveMechanic(Mechanic mechanic);
+    Mechanic declineMechanic(Mechanic mechanic);
 }
