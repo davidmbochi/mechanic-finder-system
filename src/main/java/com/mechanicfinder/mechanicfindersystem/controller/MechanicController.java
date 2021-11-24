@@ -1,7 +1,10 @@
 package com.mechanicfinder.mechanicfindersystem.controller;
 
 import com.mechanicfinder.mechanicfindersystem.exception.MechanicWithThatEmailExists;
+import com.mechanicfinder.mechanicfindersystem.model.Appointment;
+import com.mechanicfinder.mechanicfindersystem.model.AppointmentStatus;
 import com.mechanicfinder.mechanicfindersystem.model.Mechanic;
+import com.mechanicfinder.mechanicfindersystem.service.AppointmentService;
 import com.mechanicfinder.mechanicfindersystem.service.MechanicService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -22,6 +25,7 @@ import java.util.List;
 public class MechanicController {
     private final Logger logger = LoggerFactory.getLogger(MechanicController.class);
     private final MechanicService mechanicService;
+    private final AppointmentService appointmentService;
 
     @GetMapping("/all")
     public List<Mechanic> findAllMechanic(){
@@ -57,6 +61,22 @@ public class MechanicController {
     public String mechanicProfile(@PathVariable("id") Long id, Model model){
         model.addAttribute("mechanic",
                 mechanicService.findMechanicById(id));
+        return "mechanic-views/mechanic-viewport";
+    }
+
+    @GetMapping("/approve/{id}")
+    public String approveAppointment(@PathVariable("id") Long id){
+        Appointment appointmentById = appointmentService.findAppointmentById(id);
+        appointmentById.setAppointmentStatus(AppointmentStatus.APPROVED);
+        appointmentService.updateAppointmentStatus(appointmentById);
+        return "mechanic-views/mechanic-viewport";
+    }
+
+    @GetMapping("/decline/{id}")
+    public String declineAppointment(@PathVariable("id")Long id){
+        Appointment appointmentById = appointmentService.findAppointmentById(id);
+        appointmentById.setAppointmentStatus(AppointmentStatus.DECLINED);
+        appointmentService.updateAppointmentStatus(appointmentById);
         return "mechanic-views/mechanic-viewport";
     }
 }

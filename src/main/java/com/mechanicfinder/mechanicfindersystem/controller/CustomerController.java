@@ -1,17 +1,15 @@
 package com.mechanicfinder.mechanicfindersystem.controller;
 
 import com.mechanicfinder.mechanicfindersystem.exception.CustomerWithTheProvidedEmailExists;
-import com.mechanicfinder.mechanicfindersystem.model.Appointment;
-import com.mechanicfinder.mechanicfindersystem.model.Customer;
-import com.mechanicfinder.mechanicfindersystem.model.Mechanic;
-import com.mechanicfinder.mechanicfindersystem.model.Task;
-import com.mechanicfinder.mechanicfindersystem.service.AppointmentService;
-import com.mechanicfinder.mechanicfindersystem.service.CustomerService;
-import com.mechanicfinder.mechanicfindersystem.service.MechanicService;
-import com.mechanicfinder.mechanicfindersystem.service.TaskService;
+import com.mechanicfinder.mechanicfindersystem.exception.MechanicWithThatEmailExists;
+import com.mechanicfinder.mechanicfindersystem.model.*;
+import com.mechanicfinder.mechanicfindersystem.service.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,18 +28,69 @@ public class CustomerController {
     private final TaskService taskService;
     private final MechanicService mechanicService;
     private final AppointmentService appointmentService;
+    private final AppUserService appUserService;
     private final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @GetMapping("/register/{id}/{taskName}")
     public String registerCustomer(@PathVariable("id") Long id,
                                    @PathVariable("taskName") String taskName,
                                    Model model){
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (! isAuthenticated()){
+            model.addAttribute("mechanic",mechanicService.findMechanicById(id));
+            model.addAttribute("task",taskService.findTaskByTaskName(taskName));
+            model.addAttribute("customer",new Customer());
+            return "customer-views/customer-reg-form";
+        }else {
+            Mechanic mechanicById = mechanicService.findMechanicById(id);
+            Task taskByTaskName = taskService.findTaskByTaskName(taskName);
+            return "redirect:/api/customer/"+mechanicById.getId()+"/"+taskByTaskName.getTaskName();
+        }
+
+    }
+
+    @GetMapping("/{id}/{taskName}")
+    public String addAppointment(@PathVariable("id") Long id, @PathVariable("taskName") String taskName){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        AppUser appUserByUserName = appUserService.findAppUserByUserName(name);
+        Customer customer = appUserByUserName.getCustomer();
         Mechanic mechanicById = mechanicService.findMechanicById(id);
         Task taskByTaskName = taskService.findTaskByTaskName(taskName);
-        model.addAttribute("mechanic",mechanicById.getId());
-        model.addAttribute("task",taskByTaskName.getTaskName());
-        model.addAttribute("customer",new Customer());
-        return "customer-views/customer-reg-form";
+
+        Appointment appointment = new Appointment();
+
+        appointment.setCustomer(customer);
+        appointment.setMechanic(mechanicById);
+        appointment.setAppointmentStatus(AppointmentStatus.PENDING);
+        appointment.setTask(taskByTaskName);
+
+        addTaskStartAndEndTime(taskByTaskName, appointment);
+
+        appointmentService.bookAppointment(appointment);
+
+        return "redirect:/api/customer/"+customer.getId();
+    }
+
+    @GetMapping("/customer-signup")
+    public String customerSignUpForm(Model model){
+        model.addAttribute("customer", new Customer());
+        return "customer-views/signup";
+    }
+
+    @PostMapping("/process-signup")
+    public String processCustomerSignUpForm(@Valid @ModelAttribute("customer") Customer customer,
+                                            BindingResult bindingResult,
+                                            Model model,
+                                            @RequestParam("image") MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException {
+        if (bindingResult.hasErrors()){
+            return "customer-views/signup";
+        }else {
+            Customer customer1 = customerService.registerCustomer(customer, multipartFile);
+            return "redirect:/api/customer/"+customer1.getId();
+        }
+
     }
 
     @PostMapping("/process-customer-reg-form/{id}/{taskName}")
@@ -50,28 +99,38 @@ public class CustomerController {
                                          Model model,
                                          @PathVariable("id") Long id,
                                          @PathVariable("taskName") String taskName,
-                                         @RequestParam("image")MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException {
+                                         @RequestParam("image")MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException, MechanicWithThatEmailExists {
         if (bindingResult.hasErrors()){
             return "customer-views/customer-reg-form";
         }else {
-            Customer customer1 = customerService.registerCustomer(customer, multipartFile);
 
-            Mechanic mechanicById = mechanicService.findMechanicById(id);
+            Customer customerByEmail = customerService.findCustomerByEmail(customer.getEmail());
 
-            Task taskByTaskName = taskService.findTaskByTaskName(taskName);
+            if (customerByEmail != null){
+                throw new CustomerWithTheProvidedEmailExists("choose another email id");
+            }else {
+                Customer customer1 = customerService.registerCustomer(customer, multipartFile);
 
-            Appointment appointment = new Appointment();
+                Mechanic mechanicById = mechanicService.findMechanicById(id);
 
-            appointment.setCustomer(customer1);
-            appointment.setMechanic(mechanicById);
-            appointment.setTask(taskByTaskName);
+                Task taskByTaskName = taskService.findTaskByTaskName(taskName);
+
+                Appointment appointment = new Appointment();
+
+                appointment.setCustomer(customer1);
+                appointment.setMechanic(mechanicById);
+                appointment.setAppointmentStatus(AppointmentStatus.PENDING);
+                appointment.setTask(taskByTaskName);
 
 
-            addTaskStartAndEndTime(taskByTaskName, appointment);
+                addTaskStartAndEndTime(taskByTaskName, appointment);
 
-            appointmentService.bookAppointment(appointment);
+                appointmentService.bookAppointment(appointment);
 
-            return "redirect:/api/customer/"+customer1.getId();
+                return "redirect:/api/customer/"+customer1.getId();
+
+            }
+
         }
     }
 
@@ -105,5 +164,9 @@ public class CustomerController {
         }else {
             logger.info("The end time is invalid");
         }
+    }
+
+    private boolean isAuthenticated(){
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails;
     }
 }

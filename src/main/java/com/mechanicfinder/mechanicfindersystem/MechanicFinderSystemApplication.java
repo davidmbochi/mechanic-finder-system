@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -99,10 +100,23 @@ public class MechanicFinderSystemApplication {
 
 		List<Role> roles = List.of(
 				new Role("ROLE_MECHANIC"),
-				new Role("ROLE_CUSTOMER")
+				new Role("ROLE_CUSTOMER"),
+				new Role("ROLE_ADMIN")
 		);
 
 		roleRepository.saveAll(roles);
+
+		appUserRepository.save(
+				new AppUser("harryson",bCryptPasswordEncoder.encode("harryson")));
+
+		AppUser harryson = appUserRepository.findAppUserByUsername("harryson");
+
+		Role role_admin = roleRepository.findRoleByRoleName("ROLE_ADMIN");
+
+		harryson.setRoles(List.of(role_admin));
+
+		appUserRepository.save(harryson);
+
 
 		};
 	}

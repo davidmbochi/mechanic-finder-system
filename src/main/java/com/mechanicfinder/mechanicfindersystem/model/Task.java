@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -19,10 +20,6 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
 public class Task {
 
     @Id
@@ -86,5 +83,15 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(taskName);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskName='" + taskName + '\'' +
+                ", description='" + description + '\'' +
+                ", hourlyPaymentRate=" + hourlyPaymentRate +
+                ", duration=" + duration +
+                '}';
     }
 }

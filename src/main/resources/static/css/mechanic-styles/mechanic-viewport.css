@@ -4,12 +4,13 @@
 }
 
 .service-details{
-    background-color: #888888;
     padding: 20px;
-    border-radius: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    border-radius: 10px;
+    background-color: #888888;
+    margin: 10px;
 }
 
 .add-service-btn{
@@ -25,12 +26,13 @@
 }
 
 .service-list{
-    margin: 20px;
+    margin: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
     flex-wrap: wrap;
+    background-color: #888888;
     width: 100%;
 }
 
@@ -47,3 +49,27 @@
     padding: 10px;
 }
 
+.approved-appointments-section .card{
+    width: 100%;
+    padding: 30px;
+}
+.approved-appointments-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.declined-appointments-section .card{
+    width: 100%;
+    padding: 30px;
+}
+
+.declined-appointments-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: center;
+}

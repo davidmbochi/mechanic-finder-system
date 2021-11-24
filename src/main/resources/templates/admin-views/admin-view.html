@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/admin-styles/admin-style.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="pending-applications-section">
+    <div class="container">
+        <h1>Pending applications</h1>
+        <div class="card">
+            <h4>Generate pending applications on particular dates</h4>
+            <form class="generate-pending" th:action="@{#}" method="post">
+                <div class="form-control">
+                    <label>From</label>
+                    <input type="datetime-local" required>
+
+                </div>
+
+                <div class="form-control">
+                    <label>To</label>
+                    <input type="datetime-local" required>
+
+                </div>
+                <input type="submit" class="btn btn-primary" value="generate pdf document">
+            </form>
+            <div class="pending-details" th:each="mechanic: ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('PENDING')}">
+                    <div class="pending-list" >
+                        <div>
+                            <p th:text="${mechanic.firstName+' '+mechanic.lastName}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.phoneNumber}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.email}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.location}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.applicationStatus}"></p>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary" th:href="@{${mechanic.getQualificationDocumentPath()}}" th:target="_blank">view certification</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary" th:href="@{${'/api/admin/approve/'+mechanic.id}}">Approve</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary decline-btn" th:href="@{${'/api/admin/decline/'+mechanic.id}}"
+                               onclick="if(! confirm('Are you sure !')) return false">Decline </a>
+                        </div>
+
+
+                    </div>
+                </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="approved-applications-section">
+    <div class="container">
+        <h1>Approved applications</h1>
+        <div class="card">
+            <div>
+                <a class="btn btn-primary" th:href="@{#}">generate approved applications</a>
+            </div>
+            <div class="approved-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('MEMBER')}">
+                <div class="approved-list">
+                        <div>
+                            <p th:text="${mechanic.firstName+' '+mechanic.lastName}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.phoneNumber}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.email}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.location}"></p>
+                        </div>
+                        <div>
+                            <a th:href="@{#}" class="btn btn-primary" th:text="${mechanic.applicationStatus}"></a>
+                        </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+<section class="declined-applications-section">
+    <div class="container">
+        <h1>Declined applications</h1>
+        <div class="card">
+            <div>
+                <a class="btn btn-primary" th:href="@{#}">generate declined applications</a>
+            </div>
+            <div class="declined-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('DECLINED')}">
+                <div class="declined-list">
+                        <div>
+                            <p th:text="${mechanic.firstName+' '+mechanic.lastName}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.phoneNumber}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.email}"></p>
+                        </div>
+                        <div>
+                            <p th:text="${mechanic.location}"></p>
+                        </div>
+                        <div>
+                            <a th:href="@{#}" class="btn btn-primary" th:text="${mechanic.applicationStatus}"></a>
+                        </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

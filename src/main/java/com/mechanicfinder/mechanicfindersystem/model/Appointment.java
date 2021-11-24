@@ -55,4 +55,7 @@ public class Appointment {
     }, fetch = FetchType.EAGER)
     private Customer customer;
 
+    public String getAppointmentStatus() {
+        return String.valueOf(appointmentStatus);
+    }
 }

@@ -46,8 +46,8 @@
             <div class="btn add-service-btn">
                 <a th:href="@{${'/api/task/task-form/'+mechanic.id}}">add service</a>
             </div>
-            <div class="service-details">
-                <div class="service-list" th:each="task : ${mechanic.getTasks()}">
+            <div class="service-details"  th:each="task : ${mechanic.getTasks()}">
+                <div class="service-list">
                     <div class="service-id">
                         <p th:text="${task.id}"></p>
 
@@ -71,7 +71,8 @@
                     </div>
                     |
                     <div class="delete">
-                        <a class="btn delete-btn" th:href="@{#}">Delete service</a>
+                        <a class="btn delete-btn" th:href="@{#}"
+                        onclick="if (! confirm('Are yu sure !')) return false">Delete service</a>
                     </div>
 
                 </div>
@@ -88,13 +89,13 @@
 </section>
 <section class="appointment-section">
     <div class="container">
-        <h4>My Appointments</h4>
+        <h4>Pending appointments</h4>
         <div class="card">
-                <div class="appointment-list" th:each="appointment : ${mechanic.getAppointments()}">
-                    <div class="appointment-id">
-                        <p th:text="${appointment.id}"></p>
-
+                <div class="appointment-list" th:each="appointment : ${mechanic.getAppointments()}" th:if="${appointment.getAppointmentStatus().equals('PENDING')}">
+                    <div>
+                        <a th:href="@{#}" class="btn btn-primary status-btn" th:text="${appointment.getAppointmentStatus()}"></a>
                     </div>
+
                     <div class="appointment-customer">
                         <p th:text="${appointment.getCustomer().getFirstName()}"></p>
 
@@ -120,18 +121,87 @@
 
                     </div>
                     <div class="approve">
-                        <a th:href="@{#}" class="btn btn-primary">Approve appointment</a>
+                        <a th:href="@{${'/api/mechanic/approve/'+appointment.id}}" class="btn btn-primary">Approve appointment</a>
 
                     </div>
 
                     <div class="decline">
-                        <a th:href="@{#}" class="btn btn-primary decline-btn">Decline appointment</a>
+                        <a th:href="@{${'/api/mechanic/decline/'+appointment.id}}" class="btn btn-primary decline-btn"
+                        onclick="if (! confirm('Are you sure !')) return false">Decline appointment</a>
 
                     </div>
 
                 </div>
 
+        </div>
 
+    </div>
+
+</section>
+<section class="approved-appointments-section">
+    <div class="container">
+        <h4>Approved appointments</h4>
+        <div class="card">
+            <div class="approved-appointments-list" th:each="appointment: ${mechanic.getAppointments()}" th:if="${appointment.getAppointmentStatus().equals('APPROVED')}">
+                <div>
+                    <a th:href="@{#}" class="btn btn-primary status-btn" th:text="${appointment.getAppointmentStatus()}"></a>
+                </div>
+                <div>
+                    <p th:text="${'Service: '+appointment.getTask().getTaskName()}"></p>
+
+                </div>
+                <div>
+                    <p th:text="${'Duration: '+appointment.getTask().getDuration()+' hrs'}"></p>
+                </div>
+                <div>
+                    <p th:text="${'From: '+appointment.getStartTime()}"></p>
+                </div>
+                <div>
+                    <p th:text="${'To: '+appointment.getEndTime()}"></p>
+                </div>
+                <div>
+                    <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
+                </div>
+                <div>
+                    <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="declined-appointments-section">
+    <div class="container">
+        <h4>Declined appointments</h4>
+        <div class="card">
+            <div class="declined-appointments-list" th:each="appointment: ${mechanic.getAppointments()}" th:if="${appointment.getAppointmentStatus().equals('DECLINED')}">
+                <div>
+                    <a th:href="@{#}" class="btn btn-primary status-btn" th:text="${appointment.getAppointmentStatus()}"></a>
+                </div>
+                <div>
+                    <p th:text="${'Service: '+appointment.getTask().getTaskName()}"></p>
+
+                </div>
+                <div>
+                    <p th:text="${'Duration: '+appointment.getTask().getDuration()+' hrs'}"></p>
+                </div>
+                <div>
+                    <p th:text="${'From: '+appointment.getStartTime()}"></p>
+                </div>
+                <div>
+                    <p th:text="${'To: '+appointment.getEndTime()}"></p>
+                </div>
+                <div>
+                    <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
+                </div>
+                <div>
+                    <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
+                </div>
+
+            </div>
 
         </div>
 

@@ -12,4 +12,6 @@ public interface AppointmentService {
     List<Appointment> findAll();
     Appointment findAppointmentByAppointmentDateAndStartTime(LocalDate date, LocalDateTime startTime);
     Appointment findAppointmentByAppointmentDateAndEndTime(LocalDate date, LocalDateTime endTime);
+    Appointment findAppointmentById(Long id);
+    Appointment updateAppointmentStatus(Appointment appointment);
 }
