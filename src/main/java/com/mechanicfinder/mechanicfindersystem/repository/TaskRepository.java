@@ -9,4 +9,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Task findTaskByTaskName(String taskName);
     Task findTaskById(Long id);
     List<Task> findAllByTaskName(String taskName);
+    void deleteTaskById(Long id);
 }

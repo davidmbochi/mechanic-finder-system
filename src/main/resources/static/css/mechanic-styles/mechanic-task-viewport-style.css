@@ -1,3 +1,7 @@
+.mechanic-appointment-section .container{
+    justify-content: center;
+}
+
 .mechanic-appointment-section .card{
     width: 300px;
     display: flex;

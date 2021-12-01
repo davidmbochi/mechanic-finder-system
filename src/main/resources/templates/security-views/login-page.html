@@ -11,6 +11,8 @@
     <nav class="nav">
         <ul class="navbar">
             <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/api/task/all}">Services</a></li>
+
 
         </ul>
 
@@ -32,12 +34,16 @@
                     <input type="password" id="password" required name="password">
 
                 </div>
-                <div class="form-control">
+                <div class="login-btn">
                     <input class="btn btn-primary" type="submit" value="LOGIN">
 
                 </div>
 
             </form>
+            <div th:if="${param.error}" class="form-validation">
+                <p>Invalid username or password</p>
+
+            </div>
 
         </div>
 

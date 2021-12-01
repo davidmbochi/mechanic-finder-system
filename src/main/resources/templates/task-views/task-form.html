@@ -47,8 +47,10 @@
                     <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{duration}"></p>
 
                 </div>
+                <div class="create-service">
+                    <input type="submit" class="btn btn-primary" value="create service">
 
-                <input type="submit" class="btn add-btn" value="add service">
+                </div>
 
             </form>
         </div>

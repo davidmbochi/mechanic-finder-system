@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Task</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/task-styles/task-add-style.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+
+        </ul>
+
+    </nav>
+
+</header>
+<section class="add-service-section">
+    <div class="container">
+        <div class="card">
+            <h1>Add an existing service</h1>
+            <form th:object="${task}" th:action="@{${'/api/task/process-add-task/'+mechanic.id}}" method="post">
+              <div class="form-control">
+                  <select class="select-service" th:name="taskName">
+                      <option class="service-options"
+                              th:each="thetask : ${tasks}"
+                              th:value="${thetask.taskName}"
+                              th:text="${thetask.taskName}">
+
+                      </option>
+
+                  </select>
+
+              </div>
+                <div class="add-service-btn">
+                    <input class="btn btn-primary" type="submit" value="add service">
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

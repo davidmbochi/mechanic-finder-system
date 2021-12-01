@@ -1,0 +1,19 @@
+.add-service-section .container{
+    justify-content: center;
+}
+
+.add-service-section .container .card{
+    width: 400px;
+}
+
+.select-service{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.add-service-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

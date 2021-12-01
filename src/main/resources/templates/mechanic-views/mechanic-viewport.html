@@ -43,8 +43,14 @@
     <div class="container">
         <h4>My services</h4>
         <div class="card">
-            <div class="btn add-service-btn">
-                <a th:href="@{${'/api/task/task-form/'+mechanic.id}}">add service</a>
+            <div class="manage-service">
+                <div>
+                    <a  class="btn add-service-btn" th:href="@{${'/api/task/task-form/'+mechanic.id}}">create a new service</a>
+                </div>
+                <div>
+                    <a class="btn add-service-btn" th:href="@{${'/api/task/task-add-form/'+mechanic.id}}">add existing service</a>
+                </div>
+
             </div>
             <div class="service-details"  th:each="task : ${mechanic.getTasks()}">
                 <div class="service-list">
@@ -67,12 +73,12 @@
                     </div>
 
                     <div class="edit">
-                        <a  class="btn edit-btn" th:href="@{#}">Edit service</a>
+                        <a  class="btn edit-btn" th:href="@{${'/api/task/edit/'+task.id}}">Edit service</a>
                     </div>
                     |
                     <div class="delete">
-                        <a class="btn delete-btn" th:href="@{#}"
-                        onclick="if (! confirm('Are yu sure !')) return false">Delete service</a>
+                        <a class="btn delete-btn" th:href="@{${'/api/task/delete/'+task.id}}"
+                        onclick="if (! confirm('Are you sure !')) return false">Delete service</a>
                     </div>
 
                 </div>

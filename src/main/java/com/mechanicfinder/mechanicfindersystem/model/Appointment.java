@@ -22,7 +22,12 @@ public class Appointment {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL,
+    @OneToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    },
     fetch = FetchType.EAGER)
     private Task task;
 

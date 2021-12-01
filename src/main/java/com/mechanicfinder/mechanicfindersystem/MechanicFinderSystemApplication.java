@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -47,13 +46,6 @@ public class MechanicFinderSystemApplication {
 						Availability.AVAILABLE,
 						"kiambu",
 						"0774763565",
-						ApplicationStatus.PENDING),
-				new Mechanic("mary",
-						"public",
-						"mary@gmail.com",
-						Availability.AVAILABLE,
-						"Eldoret",
-						"0786354678",
 						ApplicationStatus.PENDING),
 				new Mechanic("alexander",
 						"johns",

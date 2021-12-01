@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Task</title>
+  <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+  <link th:href="@{/css/task-styles/edit-task-style.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+  <nav class="nav">
+    <ul class="navbar">
+      <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+      <li><a th:href="@{/api/task/all}">Services</a></li>
+      <li><a th:href="@{/logout}">Logout</a></li>
+
+    </ul>
+
+  </nav>
+
+</header>
+<section class="tasks-section">
+  <div class="container">
+    <div class="card">
+      <h1>Modify service details</h1>
+      <form th:object="${task}" th:action="@{/api/task/process-update}" method="post">
+        <div class="form-control">
+          <input type="hidden" th:field="*{id}">
+        </div>
+        <div class="form-control">
+          <label for="taskName">Task name</label>
+          <input type="text" th:field="*{taskName}" required id="taskName">
+
+        </div>
+        <div class="form-control">
+          <label for="description">Description</label>
+          <input type="text" th:field="*{description}" id="description" required>
+
+        </div>
+        <div class="form-control">
+          <label for="hourlyRate">Service fee</label>
+          <input type="number" th:field="*{hourlyPaymentRate}" id="hourlyRate" required>
+
+        </div>
+        <div class="form-control">
+          <label for="duration">Time taken to complete the service</label>
+          <input type="number" th:field="*{duration}" id="duration" required>
+
+        </div>
+        <div class="update-btn">
+          <input type="submit" class="btn btn-primary" value="update service">
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+</body>
+</html>

@@ -35,7 +35,9 @@
                     <input type="datetime-local" required>
 
                 </div>
-                <input type="submit" class="btn btn-primary" value="generate pdf document">
+                <div>
+                    <input type="submit" class="btn btn-primary" value="generate pdf document">
+                </div>
             </form>
             <div class="pending-details" th:each="mechanic: ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('PENDING')}">
                     <div class="pending-list" >
@@ -78,7 +80,7 @@
     <div class="container">
         <h1>Approved applications</h1>
         <div class="card">
-            <div>
+            <div class="generate-approved">
                 <a class="btn btn-primary" th:href="@{#}">generate approved applications</a>
             </div>
             <div class="approved-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('MEMBER')}">
