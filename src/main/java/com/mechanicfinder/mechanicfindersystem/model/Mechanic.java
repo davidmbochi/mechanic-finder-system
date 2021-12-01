@@ -32,7 +32,7 @@ public class Mechanic {
     @NotEmpty(message = "last name cannot be empty")
     private String lastName;
 
-    @Column(name = "email",nullable = false)
+    @Column(name = "email",nullable = false, unique = true)
     @Email
     @NotEmpty(message = "email cannot be empty")
     private String email;

@@ -30,16 +30,28 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     @Transactional
-    public Task addTask(Long mechanicId, Task task) throws TaskWithTheProvidedNameExists {
+    public Task addTask(Long mechanicId, Task task) {
         Mechanic mechanic = mechanicRepository.findMechanicById(mechanicId);
         Task addedTask = taskRepository.findTaskByTaskName(task.getTaskName());
-        if (task != addedTask){
-            mechanic.getTasks().add(task);
-            mechanicRepository.save(mechanic);
-        }else{
-            throw new TaskWithTheProvidedNameExists("Task "+task.getTaskName()+" is present");
-        }
+        mechanic.getTasks().add(task);
+        mechanicRepository.save(mechanic);
         return addedTask;
+    }
+
+    @Override
+    public Task findTaskById(Long id) {
+        return taskRepository.findTaskById(id);
+    }
+
+    @Override
+    public Task updateTask(Task task) {
+        return taskRepository.save(task);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTask(Task task) {
+       taskRepository.delete(task);
     }
 
 }

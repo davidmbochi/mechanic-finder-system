@@ -1,6 +1,5 @@
 package com.mechanicfinder.mechanicfindersystem.securityconfig;
 
-import com.mechanicfinder.mechanicfindersystem.model.ApplicationStatus;
 import com.mechanicfinder.mechanicfindersystem.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +46,8 @@ public class MechanicFinderAppSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/task/all").permitAll()
                 .antMatchers("/api/task/{taskName}").permitAll()
                 .antMatchers("/api/task/task-form/{id}").hasAuthority("ROLE_MECHANIC")
+                .antMatchers("/api/task/edit/**").hasAuthority("ROLE_MECHANIC")
+                .antMatchers("/api/task/delete/**").hasAuthority("ROLE_MECHANIC")
                 .antMatchers("/api/task/processTaskForm/{id}").hasAuthority("ROLE_MECHANIC")
                 .antMatchers("/api/mechanic/register").permitAll()
                 .antMatchers("/api/mechanic/process-mechanic-reg-form").permitAll()
@@ -62,9 +63,10 @@ public class MechanicFinderAppSecurity extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/process-login")
                 .successHandler(authenticationSuccessHandler)
                 .and()
+                .rememberMe().disable()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/api/task/all")
+                .logoutSuccessUrl("/login-page")
                 .permitAll()
                 .and()
                 .exceptionHandling()

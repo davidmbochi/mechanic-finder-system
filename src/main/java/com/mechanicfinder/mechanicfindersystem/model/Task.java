@@ -1,17 +1,12 @@
 package com.mechanicfinder.mechanicfindersystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,6 +50,13 @@ public class Task {
         this.taskName = taskName;
         this.description = description;
         this.hourlyPaymentRate = hourlyPaymentRate;
+    }
+
+    @PreRemove
+    public void removeTaskFromMechanic(){
+        for (Mechanic mechanic : mechanics) {
+            mechanic.getTasks().remove(this);
+        }
     }
 
     public void addMechanic(Mechanic mechanic){

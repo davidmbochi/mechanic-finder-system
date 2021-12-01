@@ -35,8 +35,6 @@ public class CustomerController {
     public String registerCustomer(@PathVariable("id") Long id,
                                    @PathVariable("taskName") String taskName,
                                    Model model){
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (! isAuthenticated()){
             model.addAttribute("mechanic",mechanicService.findMechanicById(id));
             model.addAttribute("task",taskService.findTaskByTaskName(taskName));
