@@ -1,6 +1,9 @@
 package com.mechanicfinder.mechanicfindersystem.service;
 
 import com.mechanicfinder.mechanicfindersystem.model.Appointment;
+import com.mechanicfinder.mechanicfindersystem.model.Customer;
+import com.mechanicfinder.mechanicfindersystem.model.Mechanic;
+import com.mechanicfinder.mechanicfindersystem.model.Task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,4 +17,5 @@ public interface AppointmentService {
     Appointment findAppointmentByAppointmentDateAndEndTime(LocalDate date, LocalDateTime endTime);
     Appointment findAppointmentById(Long id);
     Appointment updateAppointmentStatus(Appointment appointment);
+    Appointment findAppointmentByCustomerAndTask(Customer customer, Task task);
 }

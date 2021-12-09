@@ -36,7 +36,6 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customerExists = customerRepository.findCustomerByEmail(customer.getEmail());
 
         if (customerExists == null){
-//            Customer registeredCustomer = customerRepository.save(customer);
             AppUser appUser = new AppUser(customer.getUsername(),
                     passwordEncoder.encode(customer.getPassword()));
 
@@ -47,12 +46,11 @@ public class CustomerServiceImpl implements CustomerService{
 
             customer.setAppUser(appUser);
 
-            Customer customer1 = customerRepository.save(customer);
+            Customer registeredCustomer = customerRepository.save(customer);
 
-            uploadImageOrDocument(customer, profileImage, imageName
-            );
+            uploadImageOrDocument(registeredCustomer, profileImage, imageName);
 
-            return customer1;
+            return registeredCustomer;
         }else {
             throw new CustomerWithTheProvidedEmailExists("Customer with the email exists");
         }

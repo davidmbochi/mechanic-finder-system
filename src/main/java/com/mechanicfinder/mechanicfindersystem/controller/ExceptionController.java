@@ -1,5 +1,6 @@
 package com.mechanicfinder.mechanicfindersystem.controller;
 
+import com.mechanicfinder.mechanicfindersystem.exception.MultipleAppointmentException;
 import com.mechanicfinder.mechanicfindersystem.model.Mechanic;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,5 +19,11 @@ public class ExceptionController {
     public String mechanicExists(Model model){
         model.addAttribute("mechanic", new Mechanic());
         return "mechanic-views/mechanic-reg-form";
+    }
+
+    @GetMapping("/multiple-appointment-error")
+    public String multipleAppointments(Model model){
+        model.addAttribute("message","You have already booked for the service");
+        return "exception-views/multiple-appointments";
     }
 }

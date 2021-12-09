@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
@@ -39,28 +40,32 @@ public class MechanicFinderSystemApplication {
 						Availability.AVAILABLE,
 						"Nairobi",
 						"0724567345",
-						ApplicationStatus.PENDING),
+						ApplicationStatus.PENDING,
+						LocalDate.now()),
 				new Mechanic("peter",
 						"parker",
 						"peter@gmail.com",
 						Availability.AVAILABLE,
 						"kiambu",
 						"0774763565",
-						ApplicationStatus.PENDING),
+						ApplicationStatus.PENDING,
+						LocalDate.now()),
 				new Mechanic("alexander",
 						"johns",
 						"alexander@gmail.com",
 						Availability.AVAILABLE,
 						"Eldoret",
 						"0734127865",
-						ApplicationStatus.PENDING),
+						ApplicationStatus.PENDING,
+						LocalDate.now().minusDays(1)),
 				new Mechanic("harry",
 						"potter",
 						"harry@gmail.com",
 						Availability.AVAILABLE,
 						"Kisumu",
 						"0734129084",
-						ApplicationStatus.PENDING)
+						ApplicationStatus.PENDING,
+						LocalDate.now().minusDays(1))
 		);
 
 		mechanicRepository.saveAll(mechanics);

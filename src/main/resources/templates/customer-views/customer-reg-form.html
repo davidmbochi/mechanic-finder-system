@@ -21,7 +21,7 @@
 <section class="customer-form-section">
     <div class="container">
         <div class="card">
-            <h1>Create account</h1>
+            <h1>Create a customer account</h1>
             <form th:action="@{${'/api/customer/process-customer-reg-form/'+mechanic.id+'/'+task.taskName}}" th:object="${customer}" enctype="multipart/form-data" method="post">
                 <div class="form-control">
                     <label for="firstName">First name</label>

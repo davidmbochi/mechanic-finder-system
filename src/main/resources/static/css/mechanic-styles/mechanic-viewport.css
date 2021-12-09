@@ -59,6 +59,10 @@
     justify-content: space-between;
     flex-wrap: wrap;
     align-content: center;
+    background-color: #888888;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
 }
 
 .declined-appointments-section .card{
@@ -73,3 +77,4 @@
     flex-wrap: wrap;
     align-content: center;
 }
+

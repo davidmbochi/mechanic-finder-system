@@ -69,7 +69,9 @@ public class MechanicController {
         Appointment appointmentById = appointmentService.findAppointmentById(id);
         appointmentById.setAppointmentStatus(AppointmentStatus.APPROVED);
         appointmentService.updateAppointmentStatus(appointmentById);
-        return "mechanic-views/mechanic-viewport";
+        return "redirect:/api/mechanic/"+appointmentById
+                .getMechanic()
+                .getId();
     }
 
     @GetMapping("/decline/{id}")

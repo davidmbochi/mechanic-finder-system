@@ -16,4 +16,9 @@ public class MechanicFinderExceptionHandler {
     public String mechanicExists(){
         return "redirect:/mechanic-exists";
     }
+
+    @ExceptionHandler(MultipleAppointmentException.class)
+    public String multipleAppointments(){
+        return "redirect:/multiple-appointment-error";
+    }
 }
