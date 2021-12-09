@@ -174,7 +174,10 @@ public class CustomerController {
     }
 
     private boolean isAuthenticated(){
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails;
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal() instanceof UserDetails;
     }
 
     @GetMapping("/withdraw/{id}/{customerId}")
