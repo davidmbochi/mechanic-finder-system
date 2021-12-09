@@ -58,4 +58,10 @@ public class AppointmentServiceImpl implements AppointmentService{
     public Appointment findAppointmentByCustomerAndTask(Customer customer, Task task) {
         return appointmentRepository.findAppointmentByCustomerAndTask(customer,task);
     }
+
+    @Override
+    public boolean deleteAppointment(Appointment appointment) {
+        appointmentRepository.delete(appointment);
+        return true;
+    }
 }
