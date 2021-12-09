@@ -18,27 +18,41 @@
     </nav>
 
 </header>
-<section class="pending-applications-section">
+<setion class="report-section">
     <div class="container">
-        <h1>Pending applications</h1>
+        <h3>Generate mechanics based on date</h3>
         <div class="card">
-            <h4>Generate pending applications on particular dates</h4>
-            <form class="generate-pending" th:action="@{#}" method="post">
-                <div class="form-control">
-                    <label>From</label>
-                    <input type="datetime-local" required>
+            <form class="generate-pending" th:action="@{/api/reports/pending}" method="post">
+                <div class="document-date form-control">
+                    <strong>
+                        <label>Date</label>
+                    </strong>
+                    <input type="date" required th:name="startTime">
 
                 </div>
+                <div class="document-type">
+                    <strong>
+                        <label>Report type</label>
+                    </strong>
+                    <select th:name="fileFormat">
+                        <option th:value="pdf" th:text="pdf"></option>
 
-                <div class="form-control">
-                    <label>To</label>
-                    <input type="datetime-local" required>
-
+                    </select>
                 </div>
-                <div>
+                <div class="document-btn">
                     <input type="submit" class="btn btn-primary" value="generate pdf document">
                 </div>
             </form>
+
+        </div>
+
+    </div>
+
+</setion>
+<section class="pending-applications-section">
+    <div class="container">
+        <h3>Pending applications</h3>
+        <div class="card">
             <div class="pending-details" th:each="mechanic: ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('PENDING')}">
                     <div class="pending-list" >
                         <div>
@@ -80,9 +94,6 @@
     <div class="container">
         <h1>Approved applications</h1>
         <div class="card">
-            <div class="generate-approved">
-                <a class="btn btn-primary" th:href="@{#}">generate approved applications</a>
-            </div>
             <div class="approved-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('MEMBER')}">
                 <div class="approved-list">
                         <div>
@@ -112,11 +123,8 @@
 </section>
 <section class="declined-applications-section">
     <div class="container">
-        <h1>Declined applications</h1>
+        <h3>Declined applications</h3>
         <div class="card">
-            <div>
-                <a class="btn btn-primary" th:href="@{#}">generate declined applications</a>
-            </div>
             <div class="declined-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('DECLINED')}">
                 <div class="declined-list">
                         <div>

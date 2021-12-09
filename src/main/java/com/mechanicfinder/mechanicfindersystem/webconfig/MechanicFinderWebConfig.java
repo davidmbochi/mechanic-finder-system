@@ -21,11 +21,15 @@ public class MechanicFinderWebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/mechanic-qualifications/**")
                 .addResourceLocations("file:/"+qualificationDocumentPath+"/");
 
+        String reportPath = getUploadPath("./generated-reports");
+
+        registry.addResourceHandler("/generated-reports/**")
+                .addResourceLocations("file:/"+reportPath+"/");
+
         String customerProfileImagePath = getUploadPath("./customer-images");
 
         registry.addResourceHandler("/customer-images/**")
                 .addResourceLocations("file:/"+customerProfileImagePath+"/");
-
 
     }
 

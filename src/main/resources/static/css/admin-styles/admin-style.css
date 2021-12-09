@@ -23,10 +23,49 @@
     width: 100%;
 }
 
+.report-section .card{
+    width: 100%;
+    padding: 20px;
+}
+
 .generate-pending{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+form{
+    background-color: cadetblue;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.document-type{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 5px;
+}
+
+.document-date{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 5px;
+}
+.document-btn{
+    align-self: center;
+}
+
+select{
+    padding: 5px;
+    border-radius: 20px;
+}
+
+input[type='date']{
+    padding: 5px;
+    border-radius: 20px;
 }
 
 .approved-applications-section .card{

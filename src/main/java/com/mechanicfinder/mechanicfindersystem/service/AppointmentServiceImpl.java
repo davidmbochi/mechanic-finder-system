@@ -1,6 +1,9 @@
 package com.mechanicfinder.mechanicfindersystem.service;
 
 import com.mechanicfinder.mechanicfindersystem.model.Appointment;
+import com.mechanicfinder.mechanicfindersystem.model.Customer;
+import com.mechanicfinder.mechanicfindersystem.model.Mechanic;
+import com.mechanicfinder.mechanicfindersystem.model.Task;
 import com.mechanicfinder.mechanicfindersystem.repository.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,5 +52,10 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public Appointment updateAppointmentStatus(Appointment appointment) {
         return appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public Appointment findAppointmentByCustomerAndTask(Customer customer, Task task) {
+        return appointmentRepository.findAppointmentByCustomerAndTask(customer,task);
     }
 }

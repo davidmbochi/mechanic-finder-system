@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +25,7 @@ public class Mechanic {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_namme",nullable = false)
+    @Column(name = "first_name",nullable = false)
     @NotEmpty(message = "first name cannot be empty")
     private String firstName;
 
@@ -46,6 +47,9 @@ public class Mechanic {
     @Column(name = "phone_number")
     @Length(min = 10,max = 10)
     private String phoneNumber;
+
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
     @Column(name = "username")
     @Transient
@@ -90,7 +94,8 @@ public class Mechanic {
                     Availability availability,
                     String location,
                     String phoneNumber,
-                    ApplicationStatus applicationStatus) {
+                    ApplicationStatus applicationStatus,
+                    LocalDate localDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -98,16 +103,17 @@ public class Mechanic {
         this.location = location;
         this.phoneNumber = phoneNumber;
         this.applicationStatus = applicationStatus;
+        this.createdAt =localDate;
     }
 
     @Transient
     public String getProfileImagePath(){
-        return "/mechanic-images/"+id+"/"+profileImage;
+        return "/mechanic-images/"+id+"/"+this.profileImage;
     }
 
     @Transient
     public String getQualificationDocumentPath(){
-        return "/mechanic-qualifications/"+id+"/"+qualification;
+        return "/mechanic-qualifications/"+id+"/"+this.qualification;
     }
 
     public void addTask(Task task){

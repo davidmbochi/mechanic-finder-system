@@ -2,6 +2,7 @@ package com.mechanicfinder.mechanicfindersystem.controller;
 
 import com.mechanicfinder.mechanicfindersystem.exception.CustomerWithTheProvidedEmailExists;
 import com.mechanicfinder.mechanicfindersystem.exception.MechanicWithThatEmailExists;
+import com.mechanicfinder.mechanicfindersystem.exception.MultipleAppointmentException;
 import com.mechanicfinder.mechanicfindersystem.model.*;
 import com.mechanicfinder.mechanicfindersystem.service.*;
 import lombok.RequiredArgsConstructor;
@@ -35,21 +36,21 @@ public class CustomerController {
     public String registerCustomer(@PathVariable("id") Long id,
                                    @PathVariable("taskName") String taskName,
                                    Model model){
+        Mechanic mechanicById = mechanicService.findMechanicById(id);
+        Task taskByTaskName = taskService.findTaskByTaskName(taskName);
         if (! isAuthenticated()){
-            model.addAttribute("mechanic",mechanicService.findMechanicById(id));
-            model.addAttribute("task",taskService.findTaskByTaskName(taskName));
+            model.addAttribute("mechanic",mechanicById);
+            model.addAttribute("task",taskByTaskName);
             model.addAttribute("customer",new Customer());
             return "customer-views/customer-reg-form";
         }else {
-            Mechanic mechanicById = mechanicService.findMechanicById(id);
-            Task taskByTaskName = taskService.findTaskByTaskName(taskName);
             return "redirect:/api/customer/"+mechanicById.getId()+"/"+taskByTaskName.getTaskName();
         }
 
     }
 
     @GetMapping("/{id}/{taskName}")
-    public String addAppointment(@PathVariable("id") Long id, @PathVariable("taskName") String taskName){
+    public String addAppointment(@PathVariable("id") Long id, @PathVariable("taskName") String taskName) throws MultipleAppointmentException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         AppUser appUserByUserName = appUserService.findAppUserByUserName(name);
@@ -66,7 +67,12 @@ public class CustomerController {
 
         addTaskStartAndEndTime(taskByTaskName, appointment);
 
-        appointmentService.bookAppointment(appointment);
+        if (appointmentService.findAppointmentByCustomerAndTask(customer,taskByTaskName) == null){
+            appointmentService.bookAppointment(appointment);
+        }else {
+            throw new MultipleAppointmentException("You have already booked for this service!");
+        }
+
 
         return "redirect:/api/customer/"+customer.getId();
     }
@@ -97,7 +103,7 @@ public class CustomerController {
                                          Model model,
                                          @PathVariable("id") Long id,
                                          @PathVariable("taskName") String taskName,
-                                         @RequestParam("image")MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException, MechanicWithThatEmailExists {
+                                         @RequestParam("image")MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException, MechanicWithThatEmailExists, MultipleAppointmentException {
         if (bindingResult.hasErrors()){
             return "customer-views/customer-reg-form";
         }else {
@@ -110,9 +116,7 @@ public class CustomerController {
                 Customer customer1 = customerService.registerCustomer(customer, multipartFile);
 
                 Mechanic mechanicById = mechanicService.findMechanicById(id);
-
                 Task taskByTaskName = taskService.findTaskByTaskName(taskName);
-
                 Appointment appointment = new Appointment();
 
                 appointment.setCustomer(customer1);
@@ -123,7 +127,12 @@ public class CustomerController {
 
                 addTaskStartAndEndTime(taskByTaskName, appointment);
 
-                appointmentService.bookAppointment(appointment);
+                if (appointmentService.findAppointmentByCustomerAndTask(customer1,taskByTaskName) == null){
+                    appointmentService.bookAppointment(appointment);
+                }else {
+                    throw new MultipleAppointmentException("You have already booked for the service");
+                }
+
 
                 return "redirect:/api/customer/"+customer1.getId();
 
