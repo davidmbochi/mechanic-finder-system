@@ -176,4 +176,13 @@ public class CustomerController {
     private boolean isAuthenticated(){
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails;
     }
+
+    @GetMapping("/withdraw/{id}/{customerId}")
+    public String withdrawAppointment(@PathVariable("id") Long id,
+                                      @PathVariable("customerId") Long customerId){
+        Customer customer = customerService.findCustomerById(customerId);
+        Appointment appointment = appointmentService.findAppointmentById(id);
+        appointmentService.deleteAppointment(appointment);
+        return "redirect:/api/customer/"+customer.getId();
+    }
 }

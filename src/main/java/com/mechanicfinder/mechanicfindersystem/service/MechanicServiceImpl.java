@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -52,6 +53,7 @@ public class MechanicServiceImpl implements MechanicService{
         //register the mechanic
         Mechanic mechanicByEmail = mechanicRepository.findMechanicByEmail(mechanic.getEmail());
         if (mechanicByEmail != mechanic){
+            mechanic.setCreatedAt(LocalDate.now());
             mechanic.setAvailability(Availability.AVAILABLE);
             mechanic.setApplicationStatus(ApplicationStatus.PENDING);
             Mechanic registeredMechanic = mechanicRepository.save(mechanic);
