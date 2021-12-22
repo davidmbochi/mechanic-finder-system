@@ -3,8 +3,11 @@ package com.mechanicfinder.mechanicfindersystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,15 +24,24 @@ public class Customer {
     private Long id;
 
     @Column(name = "first_name")
+    @NotEmpty(message = "first name cannot be empty")
+    @Length(min = 3, max = 15)
     private String firstName;
 
     @Column(name = "last_name")
+    @NotEmpty(message = "last name cannot be empty")
+    @Length(min = 3, max = 15)
     private String lastName;
 
     @Column(name = "email", unique = true)
+    @NotEmpty(message = "email cannot be empty")
+    @Email(regexp = "^(.+)@(\\S+)$")
+    @Length(min = 15, max = 30)
     private String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true)
+    @NotEmpty(message = "phone number cannot be empty")
+    @Length(min = 10,max = 10)
     private String phoneNumber;
 
     @Column(name = "username")

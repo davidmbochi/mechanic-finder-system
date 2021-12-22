@@ -71,6 +71,16 @@ public class CustomerServiceImpl implements CustomerService{
         return customerRepository.findCustomerById(id);
     }
 
+    @Override
+    public Customer findCustomerByPhoneNumber(String phoneNumber) {
+        return customerRepository.findCustomerByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public void deleteCustomer(Customer customer) {
+        customerRepository.delete(customer);
+    }
+
     private void uploadImageOrDocument(Customer registeredCustomer,
                                        MultipartFile multipartFile,
                                        String fileName) throws IOException {

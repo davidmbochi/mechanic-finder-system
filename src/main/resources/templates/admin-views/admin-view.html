@@ -53,7 +53,7 @@
     <div class="container">
         <h3>Pending applications</h3>
         <div class="card">
-            <div class="pending-details" th:each="mechanic: ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('PENDING')}">
+            <div class="pending-details" th:each="mechanic: ${mechanics}" th:if="${mechanic.getStringApplicationStatus().equals('PENDING')}">
                     <div class="pending-list" >
                         <div>
                             <p th:text="${mechanic.firstName+' '+mechanic.lastName}"></p>
@@ -94,7 +94,7 @@
     <div class="container">
         <h1>Approved applications</h1>
         <div class="card">
-            <div class="approved-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('MEMBER')}">
+            <div class="approved-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getStringApplicationStatus().equals('MEMBER')}">
                 <div class="approved-list">
                         <div>
                             <p th:text="${mechanic.firstName+' '+mechanic.lastName}"></p>
@@ -125,7 +125,7 @@
     <div class="container">
         <h3>Declined applications</h3>
         <div class="card">
-            <div class="declined-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getApplicationStatus().equals('DECLINED')}">
+            <div class="declined-details" th:each="mechanic : ${mechanics}" th:if="${mechanic.getStringApplicationStatus().equals('DECLINED')}">
                 <div class="declined-list">
                         <div>
                             <p th:text="${mechanic.firstName+' '+mechanic.lastName}"></p>

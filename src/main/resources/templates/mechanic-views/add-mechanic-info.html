@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User information</title>
+  <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+  <link th:href="@{/css/mechanic-styles/add-mechanic-info.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+  <nav class="nav">
+    <ul class="navbar">
+      <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+      <li><a th:href="@{/api/task/all}">Services</a></li>
+
+    </ul>
+
+  </nav>
+
+</header>
+<section class="form-section">
+  <div class="container">
+    <div class="card">
+      <h1>Update Account Information</h1>
+      <form th:object="${mechanic}" th:action="@{/api/mechanic/process-add-mechanic-info}"  method="post">
+        <input type="hidden" th:field="*{id}">
+          <input type="hidden" th:field="*{firstName}">
+          <input type="hidden" th:field="*{lastName}">
+          <input type="hidden" th:field="*{email}">
+          <input type="hidden" th:field="*{createdAt}">
+          <input type="hidden" th:field="*{availability}">
+          <input type="hidden" th:field="*{applicationStatus}">
+          <input type="hidden" th:field="*{profileImage}">
+          <input type="hidden" th:field="*{qualification}">
+        <div class="form-control">
+            <label for="location">Location</label>
+            <input type="text" th:field="*{location}" id="location">
+            <p th:if="${#fields.hasErrors('location')}" th:errorclass="error" th:errors="*{location}"></p>
+
+        </div>
+        <div class="form-control">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
+          <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>
+        </div>
+        <div class="form-control">
+            <label for="username">username</label>
+            <input type="text" th:field="*{username}"  id="username">
+            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{password}"></p>
+
+        </div>
+        <div class="form-control">
+            <label for="password">password</label>
+            <input type="password" th:field="*{password}" id="password">
+            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">
+
+        </div>
+
+        <div class="form-control register-mechanic">
+          <div>
+            <input class="btn btn-primary" type="submit" value="submit application">
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+</body>
+</html>

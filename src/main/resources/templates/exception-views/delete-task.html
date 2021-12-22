@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Exists</title>
+  <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+  <link th:href="@{/css/security-styles/access-denied.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+  <nav class="nav">
+    <ul class="navbar">
+      <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+
+    </ul>
+
+  </nav>
+
+</header>
+<section class="denied-section">
+  <div class="container">
+    <div class="card">
+      <h1 th:text="${message}"></h1>
+
+    </div>
+
+  </div>
+
+</section>
+
+</body>
+</html>

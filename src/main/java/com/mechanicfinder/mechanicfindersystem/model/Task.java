@@ -3,9 +3,10 @@ package com.mechanicfinder.mechanicfindersystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -24,17 +25,19 @@ public class Task {
 
     @Column(name = "service_name", unique = true)
     @NotEmpty(message = "Task name cannot be empty")
+    @Length(min = 10, max = 50)
     private String taskName;
 
     @Column(name = "description")
     @NotEmpty(message = "Task description cannot be empty")
+    @Length(min = 15, max = 100)
     private String description;
 
     @Column(name = "cost")
+    @Min(value = 200, message = "minimum value is 200")
+    @Max(value = 5000, message = "maximum value is 5000")
+    @NotNull(message = "hourly payment cannot be empty")
     private BigDecimal hourlyPaymentRate;
-
-    @Column(name = "task_duration")
-    private Long duration;
 
 
     @ManyToMany(fetch = FetchType.EAGER,
@@ -59,6 +62,10 @@ public class Task {
         }
     }
 
+    public void setHourlyPaymentRate(BigDecimal hourlyPaymentRate) {
+        this.hourlyPaymentRate = hourlyPaymentRate;
+    }
+
     public void addMechanic(Mechanic mechanic){
         if (mechanic != null){
             this.mechanics.add(mechanic);
@@ -66,12 +73,6 @@ public class Task {
         }else {
             throw  new RuntimeException("Mechanic can not be empty");
         }
-    }
-
-    public BigDecimal getServiceTotalCost(){
-        long hourlyPaymentRate = this.hourlyPaymentRate.longValue();
-        long totalCharge = hourlyPaymentRate * this.duration;
-        return BigDecimal.valueOf(totalCharge);
     }
 
     @Override
@@ -93,7 +94,6 @@ public class Task {
                 "taskName='" + taskName + '\'' +
                 ", description='" + description + '\'' +
                 ", hourlyPaymentRate=" + hourlyPaymentRate +
-                ", duration=" + duration +
                 '}';
     }
 }

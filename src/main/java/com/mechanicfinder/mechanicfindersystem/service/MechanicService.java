@@ -16,4 +16,7 @@ public interface MechanicService {
     Mechanic saveMechanic(Mechanic mechanic);
     Mechanic approveMechanic(Mechanic mechanic);
     Mechanic declineMechanic(Mechanic mechanic);
+    Mechanic updateMechanic(Mechanic mechanic);
+    Mechanic findMechanicByPhoneNumber(String phoneNumber);
+    void deleteMechanic(Mechanic mechanic);
 }

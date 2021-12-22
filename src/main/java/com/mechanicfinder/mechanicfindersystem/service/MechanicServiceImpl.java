@@ -36,7 +36,7 @@ public class MechanicServiceImpl implements MechanicService{
 
     @Override
     @Transactional
-    public Mechanic registerMechanic(Mechanic mechanic,
+    public Mechanic  registerMechanic(Mechanic mechanic,
                                  MultipartFile profileImage,
                                  MultipartFile qualificationsDocument) throws IOException, MechanicWithThatEmailExists {
 
@@ -58,17 +58,17 @@ public class MechanicServiceImpl implements MechanicService{
             mechanic.setApplicationStatus(ApplicationStatus.PENDING);
             Mechanic registeredMechanic = mechanicRepository.save(mechanic);
 
-            AppUser appUser = new AppUser(registeredMechanic.getUsername(),
-                    passwordEncoder.encode(registeredMechanic.getPassword()));
-
-            Role role_mechanic = roleRepository.findRoleByRoleName("ROLE_MECHANIC");
-            appUser.getRoles().add(role_mechanic);
-
-            appUserService.createCredentials(appUser);
-
-            registeredMechanic.setAppUser(appUser);
-
-            mechanicRepository.save(registeredMechanic);
+//            AppUser appUser = new AppUser(registeredMechanic.getUsername(),
+//                    passwordEncoder.encode(registeredMechanic.getPassword()));
+//
+//            Role role_mechanic = roleRepository.findRoleByRoleName("ROLE_MECHANIC");
+//            appUser.getRoles().add(role_mechanic);
+//
+//            appUserService.createCredentials(appUser);
+//
+//            registeredMechanic.setAppUser(appUser);
+//
+//            mechanicRepository.save(registeredMechanic);
 
 
             //upload image
@@ -119,6 +119,22 @@ public class MechanicServiceImpl implements MechanicService{
     @Override
     public Mechanic declineMechanic(Mechanic mechanic) {
         return mechanicRepository.save(mechanic);
+    }
+
+    @Override
+    @Transactional
+    public Mechanic updateMechanic(Mechanic mechanic) {
+        return mechanicRepository.save(mechanic);
+    }
+
+    @Override
+    public Mechanic findMechanicByPhoneNumber(String email) {
+        return mechanicRepository.findMechanicByPhoneNumber(email);
+    }
+
+    @Override
+    public void deleteMechanic(Mechanic mechanic) {
+        mechanicRepository.delete(mechanic);
     }
 
     private void uploadImageOrDocument(Mechanic registeredMechanic,

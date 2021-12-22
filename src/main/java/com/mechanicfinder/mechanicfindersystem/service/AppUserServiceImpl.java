@@ -45,4 +45,9 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser createCredentials(AppUser appUser) {
         return appUserRepository.save(appUser);
     }
+
+    @Override
+    public AppUser findAppUserById(Long id) {
+        return appUserRepository.findAppUserById(id);
+    }
 }

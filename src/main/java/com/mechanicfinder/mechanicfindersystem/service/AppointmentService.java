@@ -18,5 +18,8 @@ public interface AppointmentService {
     Appointment findAppointmentById(Long id);
     Appointment updateAppointmentStatus(Appointment appointment);
     Appointment findAppointmentByCustomerAndTask(Customer customer, Task task);
+    Appointment findAppointmentByDateAndStartTimeAndEndTime(LocalDate date,
+                                                            LocalDateTime startTime,
+                                                            LocalDateTime endTime);
     boolean deleteAppointment(Appointment appointment);
 }

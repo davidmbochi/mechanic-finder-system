@@ -1,6 +1,7 @@
 package com.mechanicfinder.mechanicfindersystem.exception;
 
-public class CustomerWithTheProvidedEmailExists extends Throwable {
-    public CustomerWithTheProvidedEmailExists(String s) {
+public class CustomerWithTheProvidedEmailExists extends UserException {
+    public CustomerWithTheProvidedEmailExists(String message) {
+        super(message);
     }
 }

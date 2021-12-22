@@ -12,4 +12,5 @@ public interface MechanicRepository extends JpaRepository<Mechanic, Long> {
     Mechanic findMechanicByEmail(String email);
     Mechanic findMechanicById(Long id);
     List<Mechanic>findAllByCreatedAt(LocalDate localDate);
+    Mechanic findMechanicByPhoneNumber(String phoneNumber);
 }

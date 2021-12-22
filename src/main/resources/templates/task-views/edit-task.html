@@ -23,28 +23,26 @@
   <div class="container">
     <div class="card">
       <h1>Modify service details</h1>
-      <form th:object="${task}" th:action="@{/api/task/process-update}" method="post">
+      <form th:object="${task}" th:action="@{${'/api/task/process-update/'+task.id}}" method="post">
         <div class="form-control">
           <input type="hidden" th:field="*{id}">
         </div>
         <div class="form-control">
           <label for="taskName">Task name</label>
-          <input type="text" th:field="*{taskName}" required id="taskName">
+          <input type="text" th:field="*{taskName}"  id="taskName">
+          <p th:if="${#fields.hasErrors('taskName')}" th:errorclass="error" th:errors="*{taskName}"></p>
 
         </div>
         <div class="form-control">
           <label for="description">Description</label>
-          <input type="text" th:field="*{description}" id="description" required>
+          <input type="text" th:field="*{description}" id="description">
+          <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"></p>
 
         </div>
         <div class="form-control">
           <label for="hourlyRate">Service fee</label>
-          <input type="number" th:field="*{hourlyPaymentRate}" id="hourlyRate" required>
-
-        </div>
-        <div class="form-control">
-          <label for="duration">Time taken to complete the service</label>
-          <input type="number" th:field="*{duration}" id="duration" required>
+          <input type="number" th:field="*{hourlyPaymentRate}" id="hourlyRate" >
+          <p th:if="${#fields.hasErrors('hourlyPaymentRate')}" th:errorclass="error" th:errors="*{hourlyPaymentRate}"></p>
 
         </div>
         <div class="update-btn">

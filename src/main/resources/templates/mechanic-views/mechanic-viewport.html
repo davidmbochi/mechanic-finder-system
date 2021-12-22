@@ -22,17 +22,30 @@
 <section class="profile-section">
     <div class="container">
         <div class="card">
-            <div class="profile-details">
-                <div class="profile-image">
-                    <img th:src="@{${mechanic.getProfileImagePath()}}" alt="profile image">
-                </div>
-                <h4 th:text="${mechanic.firstName+ ' '+ mechanic.lastName}"></h4>
-                <h4 th:text="${mechanic.phoneNumber}"></h4>
-                <h4 th:text="${mechanic.email}"></h4>
-                <h4 th:text="${mechanic.applicationStatus}"
-                    style="background-color: lightgray; padding: 10px; border-radius: 10px"></h4>
+          <div class="account">
+              <div class="profile-details">
+                  <div class="profile-image">
+                      <img th:src="@{${mechanic.getProfileImagePath()}}" alt="profile image">
+                  </div>
+                  <h4 th:text="${mechanic.firstName+ ' '+ mechanic.lastName}"></h4>
+                  <h4 th:text="${mechanic.phoneNumber}"></h4>
+                  <h4 th:text="${mechanic.email}"></h4>
+                  <h4 th:text="${mechanic.applicationStatus}"
+                      style="background-color: lightgray; padding: 10px; border-radius: 10px"></h4>
 
-            </div>
+              </div>
+              <div class="manage-account">
+                  <div>
+                      <a class="btn btn-primary" th:href="@{${'/api/mechanic/edit-mechanic/'+mechanic.id}}">edit  account</a>
+                  </div>
+                  <div>
+                      <a class="btn delete-btn"
+                         th:href="@{${'/api/mechanic/delete-mechanic/'+mechanic.id}}"
+                         onclick="if (! confirm('Are you sure !')) return false">delete account</a>
+                  </div>
+
+              </div>
+          </div>
 
         </div>
 
@@ -63,10 +76,6 @@
                     </div>
                     <div class="task-description">
                         <p th:text="${task.description}"></p>
-                    </div>
-                    <div class="task-duration">
-                        <p th:text="${task.duration+' hours'}"></p>
-
                     </div>
                     <div class="hourly-payment">
                         <p th:text="${task.hourlyPaymentRate+' /hr'}"></p>
@@ -121,11 +130,14 @@
                         <p th:text="${appointment.endTime}"></p>
 
                     </div>
-
-                    <div class="service-duration">
-                        <p th:text="${appointment.getTask().getDuration()}"></p>
+                    <div class="hourly-payment">
+                        <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+'/hr'}"></p>
 
                     </div>
+                    <div class="cost-incurred">
+                        <p th:text="${'Total: Kshs '+appointment.appointTotalCost()}"></p>
+                    </div>
+
                     <div class="approve">
                         <a th:href="@{${'/api/mechanic/approve/'+appointment.id}}" class="btn btn-primary">Approve appointment</a>
 
@@ -157,9 +169,6 @@
 
                 </div>
                 <div>
-                    <p th:text="${'Duration: '+appointment.getTask().getDuration()+' hrs'}"></p>
-                </div>
-                <div>
                     <p th:text="${'From: '+appointment.getStartTime()}"></p>
                 </div>
                 <div>
@@ -168,8 +177,8 @@
                 <div>
                     <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
                 </div>
-                <div>
-                    <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
+                <div class="cost-incurred">
+                    <p th:text="${'Total: Kshs '+appointment.appointTotalCost()}"></p>
                 </div>
 
             </div>
@@ -192,7 +201,7 @@
 
                 </div>
                 <div>
-                    <p th:text="${'Duration: '+appointment.getTask().getDuration()+' hrs'}"></p>
+                    <p th:text="${appointment.getCustomer().getPhoneNumber()}"></p>
                 </div>
                 <div>
                     <p th:text="${'From: '+appointment.getStartTime()}"></p>
@@ -203,8 +212,8 @@
                 <div>
                     <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
                 </div>
-                <div>
-                    <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
+                <div class="cost-incurred">
+                    <p th:text="${'Total: Kshs '+appointment.appointTotalCost()}"></p>
                 </div>
 
             </div>
