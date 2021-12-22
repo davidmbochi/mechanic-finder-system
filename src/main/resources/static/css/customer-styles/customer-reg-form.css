@@ -2,6 +2,14 @@
     justify-content: center;
 }
 
-.customer-form-section .btn-primary{
-    margin: 0 0 0 150px;
+/*.customer-form-section .btn-primary{*/
+/*    margin: 0 0 0 150px;*/
+/*}*/
+
+.signup-btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }

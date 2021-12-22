@@ -1,8 +1,6 @@
 package com.mechanicfinder.mechanicfindersystem.controller;
 
-import com.mechanicfinder.mechanicfindersystem.exception.CustomerWithTheProvidedEmailExists;
-import com.mechanicfinder.mechanicfindersystem.exception.MechanicWithThatEmailExists;
-import com.mechanicfinder.mechanicfindersystem.exception.MultipleAppointmentException;
+import com.mechanicfinder.mechanicfindersystem.exception.*;
 import com.mechanicfinder.mechanicfindersystem.model.*;
 import com.mechanicfinder.mechanicfindersystem.service.*;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequestMapping("/api/customer")
 @Controller
@@ -44,37 +44,26 @@ public class CustomerController {
             model.addAttribute("customer",new Customer());
             return "customer-views/customer-reg-form";
         }else {
-            return "redirect:/api/customer/"+mechanicById.getId()+"/"+taskByTaskName.getTaskName();
-        }
-
-    }
-
-    @GetMapping("/{id}/{taskName}")
-    public String addAppointment(@PathVariable("id") Long id, @PathVariable("taskName") String taskName) throws MultipleAppointmentException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         AppUser appUserByUserName = appUserService.findAppUserByUserName(name);
         Customer customer = appUserByUserName.getCustomer();
-        Mechanic mechanicById = mechanicService.findMechanicById(id);
-        Task taskByTaskName = taskService.findTaskByTaskName(taskName);
-
-        Appointment appointment = new Appointment();
-
-        appointment.setCustomer(customer);
-        appointment.setMechanic(mechanicById);
-        appointment.setAppointmentStatus(AppointmentStatus.PENDING);
-        appointment.setTask(taskByTaskName);
-
-        addTaskStartAndEndTime(taskByTaskName, appointment);
-
-        if (appointmentService.findAppointmentByCustomerAndTask(customer,taskByTaskName) == null){
-            appointmentService.bookAppointment(appointment);
-        }else {
-            throw new MultipleAppointmentException("You have already booked for this service!");
+            return "redirect:/api/customer/"+mechanicById.getId()+"/"+taskByTaskName.getTaskName()+"/"+customer.getId();
         }
 
+    }
 
-        return "redirect:/api/customer/"+customer.getId();
+    @GetMapping("/{id}/{taskName}/{customerId}")
+    public String addAppointment(@PathVariable("id") Long id,
+                                 @PathVariable("taskName") String taskName,
+                                 @PathVariable("customerId") Long customerId,
+                                 Model model) throws MultipleAppointmentException {
+        model.addAttribute("mechanic",mechanicService.findMechanicById(id));
+        model.addAttribute("task",taskService.findTaskByTaskName(taskName));
+        model.addAttribute("customer",customerService.findCustomerById(customerId));
+        model.addAttribute("appointment",new Appointment());
+
+        return "appointment-views/make-appointment";
     }
 
     @GetMapping("/customer-signup")
@@ -88,11 +77,20 @@ public class CustomerController {
                                             BindingResult bindingResult,
                                             Model model,
                                             @RequestParam("image") MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors() || multipartFile.isEmpty() || !customer.getPhoneNumber().startsWith("07")){
             return "customer-views/signup";
         }else {
-            Customer customer1 = customerService.registerCustomer(customer, multipartFile);
-            return "redirect:/api/customer/"+customer1.getId();
+            Customer byEmail = customerService.findCustomerByEmail(customer.getEmail());
+            Customer byPhoneNumber = customerService.findCustomerByPhoneNumber(customer.getPhoneNumber());
+            Mechanic mechanic = mechanicService.findMechanicByEmail(customer.getEmail());
+            Mechanic phoneNumber = mechanicService.findMechanicByPhoneNumber(customer.getPhoneNumber());
+            mechanicService.findMechanicByPhoneNumber(customer.getPhoneNumber());
+            if ((byEmail != null) || (byPhoneNumber != null) || (mechanic != null) || (phoneNumber != null)){
+                throw new CustomerWithTheProvidedEmailExists("Check your email and phone number");
+            }else {
+                Customer customer1 = customerService.registerCustomer(customer, multipartFile);
+                return "redirect:/api/customer/"+customer1.getId();
+            }
         }
 
     }
@@ -104,37 +102,27 @@ public class CustomerController {
                                          @PathVariable("id") Long id,
                                          @PathVariable("taskName") String taskName,
                                          @RequestParam("image")MultipartFile multipartFile) throws CustomerWithTheProvidedEmailExists, IOException, MechanicWithThatEmailExists, MultipleAppointmentException {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors() || multipartFile.isEmpty() || !customer.getPhoneNumber().startsWith("07")){
+            model.addAttribute("mechanic",mechanicService.findMechanicById(id));
+            model.addAttribute("task",taskService.findTaskByTaskName(taskName));
             return "customer-views/customer-reg-form";
         }else {
 
             Customer customerByEmail = customerService.findCustomerByEmail(customer.getEmail());
+            Customer byPhoneNumber = customerService.findCustomerByPhoneNumber(customer.getPhoneNumber());
+            Mechanic byEmail = mechanicService.findMechanicByEmail(customer.getEmail());
+            Mechanic phoneNumber = mechanicService.findMechanicByPhoneNumber(customer.getPhoneNumber());
 
-            if (customerByEmail != null){
-                throw new CustomerWithTheProvidedEmailExists("choose another email id");
+            if ((customerByEmail != null) || (byPhoneNumber != null) || (byEmail != null) || (phoneNumber != null)){
+                throw new CustomerWithTheProvidedEmailExists("Check your email and phone number");
             }else {
+
                 Customer customer1 = customerService.registerCustomer(customer, multipartFile);
 
                 Mechanic mechanicById = mechanicService.findMechanicById(id);
                 Task taskByTaskName = taskService.findTaskByTaskName(taskName);
-                Appointment appointment = new Appointment();
 
-                appointment.setCustomer(customer1);
-                appointment.setMechanic(mechanicById);
-                appointment.setAppointmentStatus(AppointmentStatus.PENDING);
-                appointment.setTask(taskByTaskName);
-
-
-                addTaskStartAndEndTime(taskByTaskName, appointment);
-
-                if (appointmentService.findAppointmentByCustomerAndTask(customer1,taskByTaskName) == null){
-                    appointmentService.bookAppointment(appointment);
-                }else {
-                    throw new MultipleAppointmentException("You have already booked for the service");
-                }
-
-
-                return "redirect:/api/customer/"+customer1.getId();
+                return "redirect:/api/customer/"+mechanicById.getId()+"/"+taskByTaskName.getTaskName()+"/"+customer1.getId();
 
             }
 
@@ -146,31 +134,6 @@ public class CustomerController {
         model.addAttribute("customer", customerService.findCustomerById(id));
 
         return "customer-views/customer-viewport";
-    }
-
-    private void addTaskStartAndEndTime(Task taskByTaskName, Appointment appointment) {
-        Appointment appointment1 = appointmentService
-                .findAppointmentByAppointmentDateAndStartTime(
-                        appointment.getAppointmentDate(),LocalDateTime.now());
-        if (appointment1 == null){
-            appointment.setStartTime(LocalDateTime.now());
-        }else {
-            logger.info("The start time is invalid");
-        }
-
-        LocalDateTime endTime = appointment.getStartTime()
-                .plusHours(taskByTaskName.getDuration());
-
-        Appointment appointment2 = appointmentService
-                .findAppointmentByAppointmentDateAndEndTime(
-                        appointment.getAppointmentDate(), endTime
-                );
-
-        if (appointment2 == null){
-            appointment.setEndTime(endTime);
-        }else {
-            logger.info("The end time is invalid");
-        }
     }
 
     private boolean isAuthenticated(){
@@ -187,5 +150,49 @@ public class CustomerController {
         Appointment appointment = appointmentService.findAppointmentById(id);
         appointmentService.deleteAppointment(appointment);
         return "redirect:/api/customer/"+customer.getId();
+    }
+
+    @GetMapping("/edit-customer/{id}")
+    public String editCustomer(@PathVariable("id") Long id,
+                               Model model){
+        model.addAttribute("customer",customerService.findCustomerById(id));
+        model.addAttribute("appUser", customerService.findCustomerById(id).getAppUser());
+        return "customer-views/edit-customer";
+    }
+
+    @PostMapping("/process-update-customer/{id}")
+    public String updateCustomer(@Valid @ModelAttribute("customer") Customer customer,
+                                 BindingResult bindingResult,
+                                 @PathVariable("id") Long id,
+                                 Model model){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("customer",customerService.findCustomerById(customer.getId()));
+            model.addAttribute("appUser",customerService.findCustomerById(customer.getId()).getAppUser());
+            return "customer-views/edit-customer";
+        }else {
+            Customer saveCustomer = customerService.saveCustomer(customer);
+            AppUser user = appUserService.findAppUserById(id);
+            saveCustomer.setAppUser(user);
+            Customer saveCustomer1 = customerService.saveCustomer(saveCustomer);
+            return "redirect:/api/customer/"+saveCustomer1.getId();
+        }
+
+    }
+
+    @GetMapping("/delete-customer/{id}")
+    public String deleteCustomer(@PathVariable("id") Long id) throws DeleteCustomerException {
+        Customer customer = customerService.findCustomerById(id);
+        List<Appointment> approved = customer.getAppointments()
+                .stream()
+                .filter(appointment -> appointment
+                        .getAppointmentStatus()
+                        .equals("APPROVED"))
+                .collect(Collectors.toList());
+        if (! approved.isEmpty()){
+            throw new DeleteCustomerException("You have an active appointment");
+        }else {
+            customerService.deleteCustomer(customer);
+            return "redirect:/logout";
+        }
     }
 }

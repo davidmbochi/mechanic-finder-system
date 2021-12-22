@@ -88,7 +88,6 @@ img{
 .profile-details{
     background-color: #888888;
     padding: 20px;
-    border-radius: 10px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -146,6 +145,10 @@ img{
 
 .decline-btn{
     background-color: red;
+}
+
+.error{
+    color: red;
 }
 
 

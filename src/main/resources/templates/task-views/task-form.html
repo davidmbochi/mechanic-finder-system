@@ -24,27 +24,21 @@
             <h1>Add a new service</h1>
             <form th:object="${task}" th:action="@{${'/api/task/processTaskForm/'+mechanic.id}}" method="post">
                 <div class="form-control">
-                    <label>Task name</label>
-                    <input type="text" th:field="*{taskName}" required>
-                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{taskName}"></p>
+                    <label>Service name</label>
+                    <input type="text" th:field="*{taskName}">
+                    <p th:if="${#fields.hasErrors('taskName')}" th:errorclass="error" th:errors="*{taskName}"></p>
 
                 </div>
                 <div class="form-control">
                     <label>Description</label>
-                    <input type="text" th:field="*{description}" required>
-                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{description}"></p>
+                    <input type="text" th:field="*{description}">
+                    <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"></p>
 
                 </div>
                 <div class="form-control">
-                    <label>Service fee</label>
-                    <input type="number" th:field="*{hourlyPaymentRate}" required>
-                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{hourlyPaymentRate}"></p>
-
-                </div>
-                <div class="form-control">
-                    <label for="duration">Hours to complete the service</label>
-                    <input type="number" th:field="*{duration}" required id="duration">
-                    <p th:if="${#fields.hasErrors()}" th:errorclass="errors" th:errors="*{duration}"></p>
+                    <label>Hourly payment rate</label>
+                    <input type="number" th:field="*{hourlyPaymentRate}">
+                    <p th:if="${#fields.hasErrors('hourlyPaymentRate')}" th:errorclass="error" th:errors="*{hourlyPaymentRate}"></p>
 
                 </div>
                 <div class="create-service">

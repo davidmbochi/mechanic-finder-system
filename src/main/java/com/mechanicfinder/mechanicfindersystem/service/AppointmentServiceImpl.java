@@ -60,6 +60,15 @@ public class AppointmentServiceImpl implements AppointmentService{
     }
 
     @Override
+    public Appointment findAppointmentByDateAndStartTimeAndEndTime(LocalDate date, LocalDateTime startTime, LocalDateTime endTime) {
+        return appointmentRepository.findAppointmentByAppointmentDateAndStartTimeAndEndTime(
+                date,
+                startTime,
+                endTime
+        );
+    }
+
+    @Override
     public boolean deleteAppointment(Appointment appointment) {
         appointmentRepository.delete(appointment);
         return true;

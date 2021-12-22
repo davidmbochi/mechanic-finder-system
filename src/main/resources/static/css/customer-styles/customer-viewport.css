@@ -1,0 +1,34 @@
+.account{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.profile-section .container{
+    justify-content: space-between;
+}
+
+.profile-section .profile-details{
+    width: 50%;
+}
+
+.profile-section .manage-account{
+    width: 50%;
+}
+
+.manage-account{
+    background-color: #888888;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: flex-end;
+}
+
+.delete-btn{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    background-color: red;
+}

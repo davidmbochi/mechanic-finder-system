@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment details</title>
+    <link th:href="@{/css/shared/shared.css}" rel="stylesheet">
+    <link th:href="@{/css/appointment-styles/make-appointment.css}" rel="stylesheet">
+</head>
+<body>
+<header class="heading">
+    <nav class="nav">
+        <ul class="navbar">
+            <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/api/task/all}">Services</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+
+    </nav>
+</header>
+<section class="appointment-form-section">
+    <div class="container">
+        <div class="card">
+            <h1>Add appointment details</h1>
+            <form th:object="${appointment}"
+                  th:action="@{${'/api/appointment/process-appointment/'+mechanic.id+'/'+task.taskName+'/'+customer.id}}"
+                  method="post">
+                <div class="form-control">
+                    <label>start time</label>
+                    <input type="datetime-local" th:field="*{startTime}">
+                    <p th:if="${#fields.hasErrors('startTime')}" th:errorclass="error" th:errors="*{startTime}"></p>
+
+                </div>
+                <div class="form-control">
+                    <label>end time</label>
+                    <input type="datetime-local" th:field="*{endTime}">
+                    <p th:if="${#fields.hasErrors('endTime')}" th:errorclass="error" th:errors="*{endTime}">
+
+                </div>
+                <div class="form-control">
+                    <input type="submit" class="btn btn-primary" value="complete appointment">
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" th:href="@{/css/shared/shared.css}">
+  <link rel="stylesheet" th:href="@{/css/mechanic-styles/mechanic-reg-form.css}">
+</head>
+<body>
+<header class="heading">
+  <nav class="nav">
+    <ul class="navbar">
+      <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+      <li><a th:href="@{/api/task/all}">Services</a></li>
+      <li><a th:href="@{/logout}">Logout</a></li>
+
+    </ul>
+
+  </nav>
+
+</header>
+<section class="form-section">
+  <div class="container">
+    <div class="card">
+      <h1>Update mechanic details</h1>
+      <form th:action="@{${'/api/mechanic/process-update-mechanic/'+appUser.id}}" th:object="${mechanic}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{availability}">
+        <input type="hidden" th:field="*{applicationStatus}">
+        <input type="hidden" th:field="*{createdAt}">
+        <input type="hidden" th:field="*{profileImage}">
+        <input type="hidden" th:field="*{qualification}">
+        <div class="form-control">
+          <label for="firstName">First Name</label>
+          <input type="text" th:field="*{firstName}" id="firstName">
+          <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+
+        </div>
+        <div class="form-control">
+          <label for="lastName">Last Name</label>
+          <input type="text" th:field="*{lastName}" id="lastName">
+          <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+        </div>
+        <div class="form-control">
+          <label for="email">Email</label>
+          <input th:field="*{email}" id="email">
+          <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+        </div>
+        <div class="form-control">
+            <label for="location">Location</label>
+            <input type="text" th:field="*{location}" id="location">
+            <p th:if="${#fields.hasErrors('location')}" th:errorclass="error" th:errors="*{location}"></p>
+
+        </div>
+        <div class="form-control">
+            <label for="phoneNumber">contact details</label>
+            <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
+            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>
+        </div>
+
+        <div class="form-control register-mechanic">
+          <div>
+            <input class="btn btn-primary" type="submit" value="update">
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+</body>
+</html>

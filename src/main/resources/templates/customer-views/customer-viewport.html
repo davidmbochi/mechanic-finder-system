@@ -21,17 +21,31 @@
 <section class="profile-section">
     <div class="container">
         <div class="card">
-            <div class="profile-details">
-                <div class="profile-image">
-                   <img th:src="@{${customer.getCustomerImagePath()}}" alt="customer image">
+           <div class="account">
+               <div class="profile-details">
+                   <div class="profile-image">
+                       <img th:src="@{${customer.getCustomerImagePath()}}" alt="customer image">
 
-                </div>
-                <h4 th:text="${customer.firstName+' '+customer.lastName}"></h4>
-                <h4 th:text="${customer.phoneNumber}"></h4>
-                <h4 th:text="${customer.email}"></h4>
+                   </div>
+                   <h4 th:text="${customer.firstName+' '+customer.lastName}"></h4>
+                   <h4 th:text="${customer.phoneNumber}"></h4>
+                   <h4 th:text="${customer.email}"></h4>
 
 
-            </div>
+               </div>
+               <div class="manage-account">
+                   <div>
+                       <a class="btn btn-primary" th:href="@{${'/api/customer/edit-customer/'+customer.id}}">edit  account</a>
+                   </div>
+                   <div>
+                       <a class="btn delete-btn"
+                          th:href="@{${'/api/customer/delete-customer/'+customer.id}}"
+                          onclick="if (! confirm('Are you sure')) return false">delete account</a>
+                   </div>
+
+               </div>
+           </div>
+
 
         </div>
 
@@ -51,7 +65,7 @@
 
                 </div>
                 <div>
-                    <p th:text="${'Duration: '+appointment.getTask().getDuration()+' hrs'}"></p>
+                    <p th:text="${appointment.getMechanic().getPhoneNumber()}"></p>
                 </div>
                 <div>
                     <p th:text="${'From: '+appointment.getStartTime()}"></p>
@@ -59,13 +73,14 @@
                 <div>
                     <p th:text="${'To: '+appointment.getEndTime()}"></p>
                 </div>
-                <div>
-                    <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+' /hr'}"></p>
+                <div class="hourly-payment">
+                    <p th:text="${'Kshs '+appointment.getTask().getHourlyPaymentRate()+'/hr'}"></p>
+
                 </div>
-                <div>
-                    <p th:text="${'Total price: '+appointment.getTask().getServiceTotalCost()}"></p>
+                <div class="cost-incurred">
+                    <p th:text="${'Total: Kshs '+appointment.appointTotalCost()}"></p>
                 </div>
-                <div>
+                <div  th:if="${appointment.getAppointmentStatus().equals('PENDING')}">
                     <a th:href="@{${'/api/customer/withdraw/'+appointment.getId()+'/'+appointment.getCustomer().getId()}}" class="btn btn-primary decline-btn"
                     onclick="if (! confirm('Are you sure !')) return false">withdraw appointment</a>
                 </div>

@@ -4,9 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -32,13 +38,16 @@ public class Appointment {
     private Task task;
 
     @Column(name = "date")
-    @CreationTimestamp
     private LocalDate appointmentDate;
 
     @Column(name = "start_time")
+    @NotNull(message = "start time cannot be empty")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startTime;
 
     @Column(name = "end_time")
+    @NotNull(message = "end time cannot be empty")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
@@ -63,4 +72,11 @@ public class Appointment {
     public String getAppointmentStatus() {
         return String.valueOf(appointmentStatus);
     }
+
+    public BigDecimal appointTotalCost(){
+        BigDecimal hours = BigDecimal.valueOf(Duration.between(this.startTime, this.endTime).toHours());
+        BigDecimal hourlyPayment = BigDecimal.valueOf(this.getTask().getHourlyPaymentRate().longValue());
+        return hours.multiply(hourlyPayment);
+    }
+
 }

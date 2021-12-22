@@ -25,40 +25,49 @@
             <form th:action="@{${'/api/customer/process-customer-reg-form/'+mechanic.id+'/'+task.taskName}}" th:object="${customer}" enctype="multipart/form-data" method="post">
                 <div class="form-control">
                     <label for="firstName">First name</label>
-                    <input type="text" th:field="*{firstName}" required id="firstName">
+                    <input type="text" th:field="*{firstName}" id="firstName">
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}">
 
                 </div>
                 <div class="form-control">
                     <label for="lastName">Last name</label>
-                    <input type="text" th:field="*{lastName}" required id="lastName">
+                    <input type="text" th:field="*{lastName}" id="lastName">
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}">
 
                 </div>
                 <div class="form-control">
-                    <label for="phoneNumber">contact details</label>
-                    <input type="text" th:field="*{phoneNumber}" required id="phoneNumber">
+                    <label for="phoneNumber">Phone number</label>
+                    <input type="text" th:field="*{phoneNumber}" id="phoneNumber">
+                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}">
 
                 </div>
                 <div class="form-control">
                     <label for="email">email</label>
-                    <input type="text" th:field="*{email}" required id="email">
+                    <input type="text" th:field="*{email}" id="email">
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}">
 
                 </div>
                 <div class="form-control">
                     <label for="username">username</label>
-                    <input type="text" th:field="*{username}" required id="username" name="username">
+                    <input type="text" th:field="*{username}" id="username" name="username">
 
                 </div>
                 <div class="form-control">
                     <label for="password">password</label>
-                    <input type="password" th:field="*{password}" required id="password" name="password">
+                    <input type="password" th:field="*{password}" id="password" name="password">
 
                 </div>
                 <div class="form-control">
                     <label for="profileImage">upload your profile image</label>
-                    <input type="file" name="image" accept="image/png" required id="profileImage">
+                    <input type="file" name="image" accept="image/png" id="profileImage">
 
                 </div>
-                <input type="submit" class="btn btn-primary" value="create account">
+              <div class="signup-btn">
+                  <div>
+                      <input type="submit" class="btn btn-primary" value="create account">
+                  </div>
+
+              </div>
 
             </form>
 

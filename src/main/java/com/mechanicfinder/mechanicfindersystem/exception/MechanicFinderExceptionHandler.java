@@ -1,6 +1,8 @@
 package com.mechanicfinder.mechanicfindersystem.exception;
 
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.bouncycastle.math.raw.Mod;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -12,13 +14,33 @@ public class MechanicFinderExceptionHandler {
         return "redirect:/file-size-limit";
     }
 
-    @ExceptionHandler(MechanicWithThatEmailExists.class)
+    @ExceptionHandler(UserException.class)
     public String mechanicExists(){
-        return "redirect:/mechanic-exists";
+        return "redirect:/user-exists";
     }
 
     @ExceptionHandler(MultipleAppointmentException.class)
     public String multipleAppointments(){
         return "redirect:/multiple-appointment-error";
+    }
+
+    @ExceptionHandler(DeleteTaskException.class)
+    public String deleteTask(){
+        return "redirect:/delete-task";
+    }
+
+    @ExceptionHandler(MultipleTasksException.class)
+    public String multipleTasks(){
+        return "redirect:/multiple-tasks";
+    }
+
+    @ExceptionHandler(DeleteMechanicException.class)
+    public String deleteMechanic(){
+        return "redirect:/delete-mechanic-exception";
+    }
+
+    @ExceptionHandler(DeleteCustomerException.class)
+    public String deleteCustomer(){
+        return "redirect:/delete-customer-exception";
     }
 }

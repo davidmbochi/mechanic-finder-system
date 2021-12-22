@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,24 +28,28 @@ public class Mechanic {
 
     @Column(name = "first_name",nullable = false)
     @NotEmpty(message = "first name cannot be empty")
+    @Length(min = 3, max = 15)
     private String firstName;
 
     @Column(name = "last_name",nullable = false)
     @NotEmpty(message = "last name cannot be empty")
+    @Length(min = 3, max = 15)
     private String lastName;
 
     @Column(name = "email",nullable = false, unique = true)
-    @Email
+    @Email(regexp = "^(.+)@(\\S+)$")
     @NotEmpty(message = "email cannot be empty")
+    @Length(min = 15, max = 30)
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "availability")
     private Availability availability;
 
-    @Column(name = "location",nullable = false)
+    @Column(name = "location")
     private String location;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true)
     @Length(min = 10,max = 10)
     private String phoneNumber;
 
@@ -64,11 +69,9 @@ public class Mechanic {
     private ApplicationStatus applicationStatus;
 
     @Column(name = "profileImage")
-//    @NotEmpty(message = "profile image cannot be empty")
     private String profileImage;
 
     @Column(name = "qualification")
-//    @NotEmpty(message = "qualifications must be provided")
     private String qualification;
 
     @OneToMany(mappedBy = "mechanic",
@@ -108,6 +111,7 @@ public class Mechanic {
 
     @Transient
     public String getProfileImagePath(){
+
         return "/mechanic-images/"+id+"/"+this.profileImage;
     }
 
@@ -139,7 +143,15 @@ public class Mechanic {
         }
     }
 
-    public String getApplicationStatus() {
+//    public String getApplicationStatus() {
+//        return String.valueOf(applicationStatus);
+//    }
+//
+//    public String getAvailability() {
+//        return String.valueOf(availability);
+//    }
+
+    public String getStringApplicationStatus(){
         return String.valueOf(applicationStatus);
     }
 

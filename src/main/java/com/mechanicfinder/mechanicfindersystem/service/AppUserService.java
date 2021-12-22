@@ -6,4 +6,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface AppUserService extends UserDetailsService {
     AppUser findAppUserByUserName(String username);
     AppUser createCredentials(AppUser appUser);
+    AppUser findAppUserById(Long id);
 }

@@ -11,6 +11,7 @@
     <nav class="nav">
         <ul class="navbar">
             <li class="navbar-title"><a th:href="@{/}">Mechanic Finder</a></li>
+            <li><a th:href="@{/api/task/all}">Services</a></li>
             <li><a th:href="@{/login-page}">Login</a></li>
 
         </ul>
@@ -25,57 +26,70 @@
             <form th:action="@{/api/mechanic/process-mechanic-reg-form}" th:object="${mechanic}" method="post" enctype="multipart/form-data">
                 <div class="form-control">
                     <label for="firstName">First Name</label>
-                    <input type="text" th:field="*{firstName}" id="firstName" required>
+                    <input type="text" th:field="*{firstName}" id="firstName">
                     <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
 
                 </div>
                 <div class="form-control">
                     <label for="lastName">Last Name</label>
-                    <input type="text" th:field="*{lastName}" id="lastName" required>
+                    <input type="text" th:field="*{lastName}" id="lastName">
                     <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
                 </div>
                 <div class="form-control">
                     <label for="email">Email</label>
-                    <input type="email" th:field="*{email}" id="email" required>
+                    <input th:field="*{email}" id="email">
                     <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
                 </div>
-                <div class="form-control">
-                    <label for="location">Location</label>
-                    <input type="text" th:field="*{location}" id="location" required>
-                    <p th:if="${#fields.hasErrors('location')}" th:errorclass="error" th:errors="*{location}"></p>
+<!--                <div class="form-control">-->
+<!--                    <label for="location">Location</label>-->
+<!--                    <input type="text" th:field="*{location}" id="location" required>-->
+<!--                    <p th:if="${#fields.hasErrors('location')}" th:errorclass="error" th:errors="*{location}"></p>-->
 
-                </div>
-                <div class="form-control">
-                    <label for="username">username</label>
-                    <input type="text" th:field="*{username}"  id="username" required>
-                    <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>
+<!--                </div>-->
+<!--                <div class="form-control">-->
+<!--                    <label for="username">username</label>-->
+<!--                    <input type="text" th:field="*{username}"  id="username" required>-->
+<!--                    <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></p>-->
 
-                </div>
-                <div class="form-control">
-                    <label for="password">password</label>
-                    <input type="password" th:field="*{password}" id="password" required>
-                    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">
+<!--                </div>-->
+<!--                <div class="form-control">-->
+<!--                    <label for="password">password</label>-->
+<!--                    <input type="password" th:field="*{password}" id="password" required>-->
+<!--                    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">-->
 
-                </div>
-                <div class="form-control">
-                    <label for="phoneNumber">contact details</label>
-                    <input type="text" th:field="*{phoneNumber}" id="phoneNumber" required>
-                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>
-                </div>
+<!--                </div>-->
+<!--                <div class="form-control">-->
+<!--                    <label for="phoneNumber">contact details</label>-->
+<!--                    <input type="text" th:field="*{phoneNumber}" id="phoneNumber" required>-->
+<!--                    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}"></p>-->
+<!--                </div>-->
                 <div class="form-control">
                     <label>upload your profile image</label>
-                    <input type="file" name="image" accept="image/png" required>
+                    <input type="file" name="image" accept="image/png">
 
                 </div>
 
                 <div class="form-control">
                     <label>upload your qualification document</label>
-                    <input type="file" name="pdf" accept="application/pdf" required>
-
+                    <input type="file" name="pdf" accept="application/pdf">
                 </div>
+                <div class="form-control">
+                    <p style="color: red" th:text="${file}"></p>
+                </div>
+                <div class="form-control register-mechanic">
+                   <div>
+                       <input class="btn btn-primary" type="submit" value="submit application">
+                   </div>
+                </div>
+               <div class="form-control success-message">
+                   <div style="background-color: darkolivegreen;
+                   color: white;
+                   border-radius: 10px;
+                   padding: 15px;"th:if="${message}" th:text="${message}" th:class="${'alert'+message}">
 
-                <input class="btn reg-btn" type="submit" value="submit application">
+                   </div>
 
+               </div>
             </form>
 
         </div>

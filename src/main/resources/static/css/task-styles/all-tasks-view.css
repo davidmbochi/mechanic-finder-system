@@ -22,3 +22,8 @@
 .tasks-section .card:hover{
     background-color: antiquewhite;
 }
+
+.no-services{
+    width: 100%;
+    text-align: center;
+}
